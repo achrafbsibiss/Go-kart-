@@ -1,65 +1,91 @@
 @import "tailwindcss";
 
 /* ===========================================================================
-   Karting — premium motorsport design system (Tailwind v4, CSS-first config)
-   Dark theme, vibrant accents, glassmorphism, mobile-first.
+   APEX — "Paddock Brutalism" design system (Tailwind v4, CSS-first config)
+   Warm asphalt darks, faded curb red, safety orange / hazard yellow.
+   Tactile textures, broken grids, heavy mechanical motion. No pure black/white.
+   Token names kept stable so every view inherits the new palette.
    =========================================================================== */
 @theme {
-  /* Surfaces — Monaco Blue (midnight navy) */
-  --color-night: #060a14;
-  --color-surface: #0d1424;
-  --color-surface-2: #131c30;
-  --color-elevated: #1a2440;
-  --color-line: #1f2c45;
+  /* Surfaces — warm asphalt (brown undertone, never grey-blue) */
+  --color-night: #14110e;     /* page base */
+  --color-surface: #1c1815;   /* panels / cards */
+  --color-surface-2: #272320; /* inputs, hover fills */
+  --color-elevated: #322d28;
+  --color-line: #3a352f;      /* concrete borders */
 
-  /* Accents — azure + teal (purple kept for fastest-lap convention) */
-  --color-accent: #3da5ff;
-  --color-accent-soft: #6cc0ff;
-  --color-electric: #22e0c8;
-  --color-amber: #ffc861;
-  --color-purple: #a855f7;
+  /* Accents — physical track paint, desaturated */
+  --color-accent: #b0322b;       /* Curb Red — primary CTA */
+  --color-accent-soft: #c8463e;  /* curb red hover */
+  --color-accent-deep: #7e211c;  /* curb red pressed */
+  --color-electric: #e8631b;     /* Safety Orange — energy / live / hover */
+  --color-amber: #f2c20e;        /* Hazard Yellow — P1 / records / ticks */
+  --color-purple: #e8631b;       /* fastest-lap reuses orange (no neon) */
 
   /* Text */
-  --color-ink: #eef3fb;
-  --color-muted: #93a4c0;
-  --color-faint: #5a6b88;
+  --color-ink: #ede7db;    /* Bone — warm off-white */
+  --color-muted: #a39a8c;  /* Smoke */
+  --color-faint: #6e6557;
 
   /* Type */
-  --font-display: "Orbitron", "Rajdhani", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-stat: "Teko", "Oswald", sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
 
-  /* Radii + shadow */
-  --radius-xl2: 1.5rem;
-  --shadow-glow: 0 0 40px -10px var(--color-accent);
+  --radius-xl2: 0.25rem; /* brutalist: near-square corners */
+  --shadow-glow: 0 0 0 0 transparent;
 }
 
 @layer base {
   :root { color-scheme: dark; }
 
   body {
-    background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(61, 165, 255, 0.14), transparent 60%),
-      radial-gradient(900px 500px at -10% 10%, rgba(34, 224, 200, 0.08), transparent 55%),
-      var(--color-night);
+    background: var(--color-night);
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
+    position: relative;
   }
 
-  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: 0.02em; }
+  /* Asphalt grain — the single most important texture. Kills the flat
+     "digital" feel. Fixed full-screen, screen-blended, very low opacity. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-  /* RTL flips for Arabic */
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-stretch: 125%;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 0.92;
+  }
+
   [dir="rtl"] body { text-align: right; }
 }
 
 @layer components {
-  /* Glassmorphism card */
+  /* Speed lean — skew a heading block to imply forward motion */
+  .skew-speed { transform: skewX(-7deg); transform-origin: left; }
+  .font-stat { font-family: var(--font-stat); font-weight: 600; letter-spacing: 0.01em; line-height: 0.9; }
+  .font-mono2 { font-family: var(--font-mono); }
+
+  /* Warm, low-blur glass — used sparingly, not the whole chrome */
   .glass {
-    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: linear-gradient(180deg, rgba(237,231,219,0.05), rgba(237,231,219,0.015));
+    border: 1px solid var(--color-line);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border-radius: var(--radius-xl2);
   }
 
@@ -69,57 +95,93 @@
     border-radius: var(--radius-xl2);
   }
 
+  /* Buttons snap like a gearshift — hard offset shadow, no soft glow */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition active:scale-95;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase tracking-wide transition-[transform,background-color,box-shadow];
+    font-family: var(--font-sans);
+    border-radius: var(--radius-xl2);
+    transition-duration: 120ms;
+    transition-timing-function: cubic-bezier(.2,.8,.2,1);
   }
   .btn-primary {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-soft));
-    color: #fff;
-    box-shadow: 0 10px 30px -10px var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-ink);
+    box-shadow: 4px 4px 0 0 var(--color-accent-deep);
   }
+  .btn-primary:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 0 var(--color-accent-deep); }
+  .btn-primary:active { transform: translate(2px,2px); background: var(--color-accent-deep); box-shadow: 0 0 0 0 var(--color-accent-deep); }
+
   .btn-ghost {
     border: 1px solid var(--color-line);
     color: var(--color-ink);
+    background: transparent;
   }
+  .btn-ghost:hover { border-color: var(--color-electric); color: var(--color-electric); }
+
   .btn-electric {
-    background: linear-gradient(135deg, var(--color-electric), #0fd0ad);
-    color: #04150f;
+    background: var(--color-electric);
+    color: #1a0f06;
+    box-shadow: 4px 4px 0 0 #8a3a0e;
   }
+  .btn-electric:active { transform: translate(2px,2px); box-shadow: 0 0 0 0; }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider;
-    background: rgba(255,255,255,0.06);
+    @apply inline-flex items-center gap-1 px-3 py-1 text-xs font-bold uppercase tracking-widest;
+    font-family: var(--font-mono);
+    background: var(--color-surface-2);
     border: 1px solid var(--color-line);
+    border-radius: 2px;
+    color: var(--color-muted);
   }
 
-  .gradient-text {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-electric));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Stat/hero emphasis — flat ink with orange/yellow energy, not a gradient sheen */
+  .gradient-text { color: var(--color-amber); }
+
+  /* Hazard stripe — section dividers + CTA underlines. Bleeds off edges. */
+  .hazard {
+    height: 10px;
+    background-image: repeating-linear-gradient(-45deg, var(--color-amber) 0 14px, var(--color-night) 14px 28px);
+  }
+  .hazard-red {
+    background-image: repeating-linear-gradient(-45deg, var(--color-accent) 0 14px, #d8d2c6 14px 28px);
   }
 
-  /* Mobile bottom navigation */
+  /* Carbon fiber — premium surfaces only (pro kart, gold membership) */
+  .carbon {
+    background-color: #16130f;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,.4) 0 2px, transparent 2px 4px);
+  }
+
+  /* Mobile bottom navigation — flat asphalt, hazard top edge */
   .bottom-nav {
     @apply fixed inset-x-0 bottom-0 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] pt-2 md:hidden;
-    background: rgba(8, 9, 13, 0.85);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-top: 1px solid var(--color-line);
+    background: #16130f;
+    border-top: 2px solid transparent;
+    border-image: repeating-linear-gradient(-45deg, var(--color-amber) 0 10px, var(--color-night) 10px 20px) 2;
   }
-  .bottom-nav a { @apply flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 text-[11px] font-medium; color: var(--color-muted); }
+  .bottom-nav a { @apply flex flex-1 flex-col items-center gap-1 py-1.5 text-[10px] font-bold uppercase tracking-wider; font-family: var(--font-mono); color: var(--color-faint); }
   .bottom-nav a.active { color: var(--color-ink); }
-  .bottom-nav a.active .nav-ico { color: var(--color-accent); }
+  .bottom-nav a.active .nav-ico { color: var(--color-electric); }
 
-  /* Live pulse dot */
-  .live-dot { @apply inline-block h-2.5 w-2.5 rounded-full; background: var(--color-accent); box-shadow: 0 0 0 0 var(--color-accent); animation: pulse 1.6s infinite; }
+  /* Live lamp — heavy slow pulse, warning light not notification dot */
+  .live-dot { @apply inline-block h-2.5 w-2.5 rounded-full; background: var(--color-electric); animation: pulse 1.8s infinite; }
+
+  /* Cards lean (weight shift) instead of floating */
+  .lean:hover { transform: rotate(-1deg) translateY(-4px); border-color: var(--color-electric); }
+  .lean { transition: transform .18s cubic-bezier(.2,.8,.2,1), border-color .18s; }
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(61,165,255,0.6); }
-  70% { box-shadow: 0 0 0 12px rgba(61,165,255,0); }
-  100% { box-shadow: 0 0 0 0 rgba(61,165,255,0); }
+  0% { box-shadow: 0 0 0 0 rgba(232,99,27,0.55); }
+  70% { box-shadow: 0 0 0 11px rgba(232,99,27,0); }
+  100% { box-shadow: 0 0 0 0 rgba(232,99,27,0); }
 }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-.animate-rise { animation: rise 0.6s both; }
+.animate-rise { animation: rise 0.5s both; }
+
+/* Marquee for the live timing tower ticker */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { display: inline-flex; white-space: nowrap; animation: marquee 28s linear infinite; }

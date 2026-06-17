@@ -1,96 +1,138 @@
-<%# ===== HERO ===== %>
-<section class="relative overflow-hidden">
-  <div class="absolute inset-0 -z-10">
-    <%= image_tag "hero.jpg", alt: "", class: "absolute inset-0 h-full w-full object-cover opacity-50", loading: "eager" %>
-    <div class="absolute inset-0" style="background:linear-gradient(to bottom, transparent, var(--color-night) 92%)"></div>
-    <div class="absolute inset-0" style="background:radial-gradient(900px 500px at 70% 0%, rgba(61,165,255,0.18), transparent 60%)"></div>
-    <div class="absolute inset-0 opacity-[0.04]" style="background-image:linear-gradient(var(--color-ink) 1px,transparent 1px),linear-gradient(90deg,var(--color-ink) 1px,transparent 1px);background-size:48px 48px"></div>
+<%# ============================ HERO — broken grid ============================ %>
+<section class="relative overflow-hidden border-b border-[color:var(--color-line)]">
+  <%# Kart photo anchored bottom-right, bleeding off the right + bottom edges %>
+  <div class="pointer-events-none absolute inset-y-0 right-0 -z-10 w-[78%] md:w-[60%]">
+    <%= image_tag "hero.jpg", alt: "", class: "h-full w-full object-cover object-left", loading: "eager" %>
+    <div class="absolute inset-0" style="background:linear-gradient(90deg, var(--color-night) 8%, transparent 55%), linear-gradient(0deg, var(--color-night) 4%, transparent 40%)"></div>
   </div>
 
-  <div class="mx-auto flex max-w-7xl flex-col items-center px-5 pb-16 pt-14 text-center md:pt-24">
-    <span class="chip animate-rise"><span class="live-dot"></span><%= t("home.hero_eyebrow") %></span>
-    <h1 class="animate-rise mt-6 font-display text-6xl font-black leading-[0.95] sm:text-7xl md:text-8xl">
-      <%= t("home.hero_title_1") %><br><span class="gradient-text"><%= t("home.hero_title_2") %></span>
-    </h1>
-    <p class="animate-rise mt-6 max-w-xl text-base text-[color:var(--color-muted)] md:text-lg"><%= t("home.hero_sub") %></p>
-    <div class="animate-rise mt-8 flex flex-wrap items-center justify-center gap-3">
-      <%= link_to t("home.book_now"), new_account_booking_path, class: "btn btn-primary text-base" %>
-      <%= link_to live_path, class: "btn btn-ghost text-base" do %><span class="live-dot"></span> <%= t("home.watch_live") %><% end %>
+  <div class="relative mx-auto grid max-w-7xl grid-cols-12 gap-4 px-5 pb-20 pt-16 md:pb-28 md:pt-24">
+    <%# Vertical telemetry rail, far-left margin %>
+    <div class="font-mono2 col-span-1 hidden items-center md:flex">
+      <p class="-rotate-90 whitespace-nowrap text-xs uppercase tracking-[0.35em] text-[color:var(--color-faint)]">
+        Top&nbsp;Speed&nbsp;<span class="text-[color:var(--color-electric)]"><%= @featured_karts.map(&:top_speed_kmh).compact.max || 95 %></span>&nbsp;·&nbsp;<%= @track&.corners || 14 %>&nbsp;Corners&nbsp;·&nbsp;<%= @track&.length_m || 1180 %>m
+      </p>
     </div>
 
-    <%# Stats bar %>
-    <div class="glass mt-14 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
-      <% [[(@featured_karts.map(&:top_speed_kmh).compact.max || 80).to_s + " km/h", t("home.stat_top_speed")],
-          [(@track&.length_m || 1100).to_s + " m", t("home.stat_track")],
+    <div class="col-span-12 md:col-span-9">
+      <span class="chip"><span class="live-dot"></span><%= t("home.hero_eyebrow") %></span>
+
+      <%# Headline breaks its container, left edge bleeds, skewed for speed %>
+      <h1 class="skew-speed mt-6 -ml-1 text-7xl sm:text-8xl md:text-[10rem]">
+        <span class="block"><%= t("home.hero_title_1") %></span>
+        <span class="relative inline-block">
+          <span class="relative z-10"><%= t("home.hero_title_2") %></span>
+          <span class="absolute -bottom-1 left-0 right-0 z-0 h-4 -skew-x-12 bg-[color:var(--color-electric)]"></span>
+        </span>
+      </h1>
+
+      <p class="font-mono2 mt-7 max-w-md text-sm leading-relaxed text-[color:var(--color-muted)]"><%= t("home.hero_sub") %></p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <%= link_to t("home.book_now"), new_account_booking_path, class: "btn btn-primary" %>
+        <%= link_to live_path, class: "btn btn-ghost" do %><span class="live-dot"></span> <%= t("home.watch_live") %><% end %>
+      </div>
+    </div>
+  </div>
+
+  <%# Stat ledger — asymmetric strip overlapping the section base %>
+  <div class="relative border-t border-[color:var(--color-line)] bg-[color:var(--color-night)]/70">
+    <div class="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
+      <% [[(@featured_karts.map(&:top_speed_kmh).compact.max || 95).to_s, "km/h " + t("home.stat_top_speed")],
+          [(@track&.length_m || 1180).to_s, "m " + t("home.stat_track")],
           [(@track&.corners || 14).to_s, t("home.stat_corners")],
-          [current_venue.open_now? ? t("home.open_now") : t("home.closed_now"), t("nav.home")]].each do |value, label| %>
-        <div class="p-5">
-          <div class="font-display text-2xl font-bold gradient-text"><%= value %></div>
-          <div class="mt-1 text-xs uppercase tracking-widest text-[color:var(--color-muted)]"><%= label %></div>
+          [current_venue.open_now? ? "OPEN" : "CLSD", current_venue.open_now? ? t("home.open_now") : t("home.closed_now")]].each_with_index do |(value, label), i| %>
+        <div class="border-[color:var(--color-line)] px-5 py-5 <%= 'border-s' if i.positive? %>">
+          <div class="font-stat text-5xl text-[color:var(--color-ink)]"><%= value %></div>
+          <div class="font-mono2 mt-1 text-[10px] uppercase tracking-widest text-[color:var(--color-faint)]"><%= label %></div>
         </div>
       <% end %>
     </div>
   </div>
 </section>
 
-<%# ===== LIVE NOW ===== %>
-<section class="mx-auto max-w-7xl px-5 py-12">
-  <div class="mb-6 flex items-center justify-between">
-    <h2 class="flex items-center gap-3 font-display text-2xl font-bold"><span class="live-dot"></span><%= t("home.live_now") %></h2>
-    <%= link_to t("home.view_all"), live_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" %>
+<%# ============================ LIVE TIMING TOWER ============================ %>
+<section class="overflow-hidden border-b border-[color:var(--color-line)] bg-[#16130f] py-3">
+  <div class="flex items-center gap-4">
+    <span class="font-mono2 ms-4 flex shrink-0 items-center gap-2 bg-[color:var(--color-accent)] px-3 py-1 text-xs font-bold uppercase tracking-widest text-[color:var(--color-ink)]"><span class="h-2 w-2 rounded-full bg-[color:var(--color-amber)]"></span> Live</span>
+    <% rows = @live_races.flat_map { |r| r.leaderboard.first(6).each_with_index.map { |e, i| "P#{i + 1} #{e.driver_name} #{e.best_lap_label}" } } %>
+    <% rows = ["No live session — schedule below", "Best today #{(@records[:day]&.label || '—')}", "Book your grid slot"] if rows.empty? %>
+    <div class="font-stat marquee gap-10 text-2xl text-[color:var(--color-muted)]">
+      <% (rows * 2).each do |row| %><span class="shrink-0"><%= row %> <span class="text-[color:var(--color-faint)]">//</span></span><% end %>
+    </div>
+  </div>
+</section>
+
+<%# ============================ THE FLEET — staggered ============================ %>
+<section class="mx-auto max-w-7xl px-5 py-16">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <span class="font-mono2 text-xs uppercase tracking-[0.3em] text-[color:var(--color-electric)]">/ 01 — Machines</span>
+      <h2 class="skew-speed mt-2 text-5xl md:text-6xl"><%= t("home.featured_karts") %></h2>
+    </div>
+    <%= link_to t("home.view_all"), karts_path, class: "font-mono2 hidden text-xs uppercase tracking-wider text-[color:var(--color-muted)] hover:text-[color:var(--color-electric)] sm:block" %>
+  </div>
+  <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+    <% @featured_karts.each_with_index do |kart, i| %>
+      <div class="<%= i.odd? ? 'md:translate-y-8' : '' %>"><%= render "karts/card", kart: kart %></div>
+    <% end %>
+  </div>
+</section>
+
+<div class="hazard"></div>
+
+<%# ============================ LIVE NOW ============================ %>
+<section class="mx-auto max-w-7xl px-5 py-16">
+  <div class="mb-8 flex items-end justify-between">
+    <div>
+      <span class="font-mono2 text-xs uppercase tracking-[0.3em] text-[color:var(--color-electric)]">/ 02 — Track</span>
+      <h2 class="skew-speed mt-2 flex items-center gap-3 text-5xl md:text-6xl"><span class="live-dot"></span><%= t("home.live_now") %></h2>
+    </div>
+    <%= link_to t("home.view_all"), live_path, class: "font-mono2 hidden text-xs uppercase tracking-wider text-[color:var(--color-muted)] hover:text-[color:var(--color-electric)] sm:block" %>
   </div>
   <% if @live_races.any? %>
     <div class="grid gap-4 md:grid-cols-3">
       <% @live_races.each do |race| %><%= render "races/live_card", race: race %><% end %>
     </div>
   <% else %>
-    <div class="card grid place-items-center p-12 text-center text-[color:var(--color-muted)]">
+    <div class="card grid place-items-center p-14 text-center text-[color:var(--color-muted)]">
       <%= icon(:flag, css: "h-10 w-10 opacity-40") %>
-      <p class="mt-3"><%= t("home.no_live") %></p>
+      <p class="font-mono2 mt-3 text-sm uppercase tracking-wider"><%= t("home.no_live") %></p>
     </div>
   <% end %>
 </section>
 
-<%# ===== FEATURED KARTS ===== %>
-<section class="mx-auto max-w-7xl px-5 py-12">
-  <div class="mb-6 flex items-center justify-between">
-    <h2 class="font-display text-2xl font-bold"><%= t("home.featured_karts") %></h2>
-    <%= link_to t("home.view_all"), karts_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" %>
-  </div>
-  <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-    <% @featured_karts.each do |kart| %><%= render "karts/card", kart: kart %><% end %>
-  </div>
-</section>
-
-<%# ===== UPCOMING ===== %>
+<%# ============================ UPCOMING — pinned flyers ============================ %>
 <% if @upcoming_competitions.any? || @upcoming_events.any? %>
-  <section class="mx-auto max-w-7xl px-5 py-12">
-    <h2 class="mb-6 font-display text-2xl font-bold"><%= t("home.upcoming_events") %></h2>
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <% @upcoming_competitions.each do |c| %>
-        <%= link_to competition_path(c), class: "card p-6 transition hover:-translate-y-1" do %>
+  <section class="mx-auto max-w-7xl px-5 py-16">
+    <span class="font-mono2 text-xs uppercase tracking-[0.3em] text-[color:var(--color-electric)]">/ 03 — Calendar</span>
+    <h2 class="skew-speed mb-8 mt-2 text-5xl md:text-6xl"><%= t("home.upcoming_events") %></h2>
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <% @upcoming_competitions.each_with_index do |c, i| %>
+        <%= link_to competition_path(c), class: "card lean block p-6 #{i.even? ? 'rotate-1' : '-rotate-1'}" do %>
           <span class="chip"><%= t("competitions.format.#{c.format}", default: c.format) %></span>
-          <h3 class="mt-3 font-display text-lg font-bold"><%= c.name %></h3>
-          <p class="mt-1 text-sm text-[color:var(--color-muted)]"><%= l(c.starts_at, format: :long) if c.starts_at %></p>
+          <h3 class="mt-4 text-2xl"><%= c.name %></h3>
+          <p class="font-mono2 mt-2 text-xs uppercase tracking-wider text-[color:var(--color-muted)]"><%= l(c.starts_at, format: :long) if c.starts_at %></p>
         <% end %>
       <% end %>
-      <% @upcoming_events.each do |e| %>
-        <%= link_to event_path(e), class: "card p-6 transition hover:-translate-y-1" do %>
+      <% @upcoming_events.each_with_index do |e, i| %>
+        <%= link_to event_path(e), class: "card lean block p-6 #{i.even? ? '-rotate-1' : 'rotate-1'}" do %>
           <span class="chip"><%= t("events.title") %></span>
-          <h3 class="mt-3 font-display text-lg font-bold"><%= e.name %></h3>
-          <p class="mt-1 text-sm text-[color:var(--color-muted)]"><%= l(e.starts_at, format: :long) if e.starts_at %></p>
+          <h3 class="mt-4 text-2xl"><%= e.name %></h3>
+          <p class="font-mono2 mt-2 text-xs uppercase tracking-wider text-[color:var(--color-muted)]"><%= l(e.starts_at, format: :long) if e.starts_at %></p>
         <% end %>
       <% end %>
     </div>
   </section>
 <% end %>
 
-<%# ===== CTA ===== %>
-<section class="mx-auto max-w-7xl px-5 py-16">
-  <div class="glass relative overflow-hidden p-10 text-center md:p-16">
-    <div class="absolute inset-0 -z-10" style="background:radial-gradient(600px 300px at 50% 120%, rgba(21,240,200,0.18), transparent)"></div>
-    <h2 class="font-display text-3xl font-black md:text-5xl"><%= t("home.book_now") %></h2>
-    <p class="mx-auto mt-4 max-w-lg text-[color:var(--color-muted)]"><%= t("home.hero_sub") %></p>
-    <%= link_to t("home.book_now"), new_account_booking_path, class: "btn btn-primary mt-8 text-base" %>
+<%# ============================ CTA — worn concrete ============================ %>
+<section class="relative overflow-hidden border-y border-[color:var(--color-line)] carbon">
+  <div class="absolute inset-0 -z-0 opacity-30" style="background:radial-gradient(700px 320px at 80% 120%, rgba(232,99,27,0.25), transparent)"></div>
+  <div class="relative mx-auto max-w-7xl px-5 py-20 text-center md:py-28">
+    <h2 class="skew-speed text-6xl md:text-8xl"><%= t("home.book_now") %></h2>
+    <p class="font-mono2 mx-auto mt-5 max-w-md text-sm uppercase tracking-wider text-[color:var(--color-muted)]"><%= t("home.hero_sub") %></p>
+    <%= link_to t("home.book_now"), new_account_booking_path, class: "btn btn-primary mt-9 text-base" %>
   </div>
 </section>
+<div class="hazard hazard-red"></div>

@@ -1,18 +1,21 @@
-<%= link_to kart_path(kart), class: "card group overflow-hidden transition hover:-translate-y-1 hover:border-white/20" do %>
-  <div class="relative aspect-[4/3] overflow-hidden bg-[color:var(--color-surface-2)]">
+<%= link_to kart_path(kart), class: "card lean group block overflow-hidden #{'carbon' if kart.pro?}" do %>
+  <div class="relative aspect-[4/5] overflow-hidden bg-[color:var(--color-surface-2)]">
     <% if kart.photo.attached? %>
-      <%= image_tag kart.photo, class: "h-full w-full object-cover transition duration-500 group-hover:scale-105", loading: "lazy" %>
+      <%= image_tag kart.photo, class: "h-full w-full scale-105 object-cover transition duration-500 group-hover:scale-110", loading: "lazy" %>
     <% else %>
       <div class="grid h-full place-items-center text-[color:var(--color-faint)]"><%= icon(:gauge, css: "h-12 w-12") %></div>
     <% end %>
-    <span class="chip absolute left-3 top-3 bg-black/40"><%= t("kart_types.category.#{kart.category}", default: kart.category.to_s.titleize) %></span>
+    <div class="absolute inset-0" style="background:linear-gradient(0deg, var(--color-surface) 6%, transparent 55%)"></div>
+    <span class="chip absolute left-2 top-2"><%= kart.category.to_s.titleize %></span>
+    <%# Big Teko index numeral, bleeding from bottom corner %>
+    <span class="font-stat absolute -bottom-2 right-2 text-6xl text-[color:var(--color-ink)]/90"><%= kart.name %></span>
   </div>
-  <div class="p-5">
-    <h3 class="font-display text-lg font-bold"><%= kart.name %></h3>
-    <div class="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
-      <div><div class="font-display text-base text-[color:var(--color-electric)]"><%= kart.top_speed_kmh %></div><div class="text-[color:var(--color-faint)]">km/h</div></div>
-      <div><div class="font-display text-base"><%= kart.power_hp %></div><div class="text-[color:var(--color-faint)]">hp</div></div>
-      <div><div class="font-display text-base"><%= kart.weight_kg %></div><div class="text-[color:var(--color-faint)]">kg</div></div>
-    </div>
+  <div class="flex items-stretch border-t border-[color:var(--color-line)] text-center">
+    <% [[kart.top_speed_kmh, "km/h"], [kart.power_hp, "hp"], [kart.weight_kg, "kg"]].each_with_index do |(v, u), i| %>
+      <div class="flex-1 px-1 py-3 <%= 'border-s border-[color:var(--color-line)]' if i.positive? %>">
+        <div class="font-stat text-3xl text-[color:var(--color-electric)]"><%= v %></div>
+        <div class="font-mono2 text-[9px] uppercase tracking-widest text-[color:var(--color-faint)]"><%= u %></div>
+      </div>
+    <% end %>
   </div>
 <% end %>

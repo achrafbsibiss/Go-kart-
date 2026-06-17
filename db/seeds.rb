@@ -12,11 +12,11 @@ User.delete_all
 
 # --- Venue + hours ---
 venue = Venue.create!(
-  name: "Apex Karting",
+  name: "Karting Agadir",
   description: "A world-class indoor & outdoor karting circuit featuring electric and combustion fleets, professional live timing and championship competition.",
-  address: "Zone Industrielle, Route de l'Aéroport", city: "Casablanca", country: "Morocco",
-  phone: "+212 522 000 000", email: "hello@apexkarting.example",
-  latitude: 33.5731, longitude: -7.5898,
+  address: "Route de l'Aéroport Al Massira", city: "Agadir", country: "Morocco",
+  phone: "+212 528 000 000", email: "hello@kartingagadir.ma",
+  latitude: 30.4278, longitude: -9.5981,
   socials: { "instagram" => "https://instagram.com", "facebook" => "https://facebook.com", "youtube" => "https://youtube.com" }
 )
 (0..6).each do |dow|
@@ -78,7 +78,7 @@ end
 ].each { |a| Event.create!(a) }
 
 # --- Competitions ---
-champ = Competition.create!(name: "Apex Winter Championship", format: :championship, status: :registration_open,
+champ = Competition.create!(name: "Agadir Winter Championship", format: :championship, status: :registration_open,
                             starts_at: 7.days.from_now, ends_at: 60.days.from_now,
                             registration_opens_at: 1.day.ago, registration_closes_at: 6.days.from_now,
                             capacity: 24, entry_fee_cents: 40_00, currency: "EUR", track: track,
