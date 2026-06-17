@@ -4,7 +4,7 @@ module Timing
   # is connected. Each driver has a base pace plus random variation.
   class SimulatedAdapter < BaseAdapter
     def poll
-      race.race_entries.where(status: [:on_track, :registered]).map do |entry|
+      race.race_entries.where(status: [ :on_track, :registered ]).map do |entry|
         Timing::LapEvent.new(
           transponder_id: entry.transponder_id,
           kart_number: entry.kart_number,
@@ -21,7 +21,7 @@ module Timing
       base = pace_for(entry)
       jitter = rand(-1500..1500)
       penalty = rand < 0.08 ? rand(2000..6000) : 0
-      [base + jitter + penalty, 25_000].max
+      [ base + jitter + penalty, 25_000 ].max
     end
 
     def pace_for(entry)

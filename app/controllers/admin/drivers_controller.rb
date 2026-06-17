@@ -12,7 +12,7 @@ module Admin
       "total_races",
       "best_lap_ms",
       "points",
-      "avatar",
+      "avatar"
       ]
     end
   end

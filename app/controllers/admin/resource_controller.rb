@@ -26,7 +26,7 @@ module Admin
     def create
       @record = model_class.new(resource_params)
       if @record.save
-        redirect_to [:admin, redirect_target], notice: t("actions.create")
+        redirect_to [ :admin, redirect_target ], notice: t("actions.create")
       else
         render "admin/resources/new", status: :unprocessable_entity
       end
@@ -34,7 +34,7 @@ module Admin
 
     def update
       if @record.update(resource_params)
-        redirect_to [:admin, redirect_target], notice: t("actions.save")
+        redirect_to [ :admin, redirect_target ], notice: t("actions.save")
       else
         render "admin/resources/edit", status: :unprocessable_entity
       end
@@ -42,7 +42,7 @@ module Admin
 
     def destroy
       @record.destroy
-      redirect_to polymorphic_path([:admin, model_class]), notice: t("actions.delete")
+      redirect_to polymorphic_path([ :admin, model_class ]), notice: t("actions.delete")
     end
 
     helper_method :model_class, :resource_columns, :form_columns

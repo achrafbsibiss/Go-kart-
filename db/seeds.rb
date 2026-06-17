@@ -4,10 +4,10 @@ require "securerandom"
 
 puts "Seeding Karting platform…"
 
-[Lap, RaceEntry, BestLap, Race, ChampionshipStanding, TournamentMatch,
+[ Lap, RaceEntry, BestLap, Race, ChampionshipStanding, TournamentMatch,
  Booking, Registration, Payment, Subscription, GalleryItem, Notification,
  SessionPrice, MembershipPlan, Competition, Event, KartType, OpeningHour,
- Driver, Track, Venue].each(&:delete_all)
+ Driver, Track, Venue ].each(&:delete_all)
 User.delete_all
 
 # --- Venue + hours ---
@@ -51,9 +51,9 @@ end
 
 # --- Membership plans ---
 [
-  { name: "Bronze", period: :monthly, price_cents: 49_00, popular: false, benefits: ["2 sessions / month", "10% off extra sessions", "Online booking"] },
-  { name: "Silver", period: :monthly, price_cents: 89_00, popular: true, benefits: ["5 sessions / month", "20% off extra sessions", "Priority booking", "Free helmet rental"] },
-  { name: "Gold", period: :yearly, price_cents: 899_00, popular: false, benefits: ["Unlimited sessions", "30% off competitions", "Personal transponder", "Exclusive events", "Pro coaching"] }
+  { name: "Bronze", period: :monthly, price_cents: 49_00, popular: false, benefits: [ "2 sessions / month", "10% off extra sessions", "Online booking" ] },
+  { name: "Silver", period: :monthly, price_cents: 89_00, popular: true, benefits: [ "5 sessions / month", "20% off extra sessions", "Priority booking", "Free helmet rental" ] },
+  { name: "Gold", period: :yearly, price_cents: 899_00, popular: false, benefits: [ "Unlimited sessions", "30% off competitions", "Personal transponder", "Exclusive events", "Pro coaching" ] }
 ].each_with_index { |a, i| MembershipPlan.create!(a.merge(position: i, active: true, currency: "EUR")) }
 
 # --- Users + drivers ---

@@ -13,7 +13,7 @@ module Admin
       "currency",
       "category",
       "position",
-      "active",
+      "active"
       ]
     end
   end

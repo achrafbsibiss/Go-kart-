@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :locale, inclusion: { in: LOCALES }
 
   def full_name
-    [first_name, last_name].compact_blank.join(" ").presence || email.split("@").first
+    [ first_name, last_name ].compact_blank.join(" ").presence || email.split("@").first
   end
 
   def staff_or_admin?

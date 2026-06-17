@@ -9,7 +9,7 @@ module Admin
       "length_m",
       "corners",
       "surface",
-      "layout_image",
+      "layout_image"
       ]
     end
   end

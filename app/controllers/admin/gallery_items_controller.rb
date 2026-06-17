@@ -11,7 +11,7 @@ module Admin
       "video_url",
       "position",
       "featured",
-      "image",
+      "image"
       ]
     end
   end

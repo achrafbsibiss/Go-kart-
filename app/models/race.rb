@@ -15,7 +15,7 @@ class Race < ApplicationRecord
   def leaderboard
     race_entries
       .includes(:driver, :kart_type)
-      .sort_by { |e| [-(e.laps_completed || 0), e.total_time_ms || Float::INFINITY] }
+      .sort_by { |e| [ -(e.laps_completed || 0), e.total_time_ms || Float::INFINITY ] }
   end
 
   def fastest_entry

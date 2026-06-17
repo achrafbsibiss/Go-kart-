@@ -15,7 +15,7 @@ module Admin
       "min_height_cm",
       "position",
       "active",
-      "photo",
+      "photo"
       ]
     end
   end

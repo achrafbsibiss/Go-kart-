@@ -16,7 +16,7 @@ module Admin
       "entry_fee_cents",
       "currency",
       "track_id",
-      "banner",
+      "banner"
       ]
     end
   end

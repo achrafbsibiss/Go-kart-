@@ -11,7 +11,7 @@ module Admin
       "period",
       "popular",
       "position",
-      "active",
+      "active"
       ]
     end
   end

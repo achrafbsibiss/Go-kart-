@@ -32,7 +32,7 @@ module ApplicationHelper
   end
 
   def locale_switcher_options
-    I18n.available_locales.map { |l| [l, t("locales.#{l}", default: l.to_s.upcase)] }
+    I18n.available_locales.map { |l| [ l, t("locales.#{l}", default: l.to_s.upcase) ] }
   end
 
   def money(cents, currency = nil)

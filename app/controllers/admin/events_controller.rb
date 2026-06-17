@@ -11,7 +11,7 @@ module Admin
       "ends_at",
       "location",
       "featured",
-      "banner",
+      "banner"
       ]
     end
   end

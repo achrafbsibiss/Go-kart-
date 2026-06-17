@@ -42,7 +42,7 @@ module Karting
     # Internationalization: French (default), English, Arabic (RTL).
     config.i18n.available_locales = %i[fr en ar]
     config.i18n.default_locale = :fr
-    config.i18n.fallbacks = [:en]
+    config.i18n.fallbacks = [ :en ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
     # Background processing.
