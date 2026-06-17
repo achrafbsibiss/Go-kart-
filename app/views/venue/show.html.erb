@@ -1,0 +1,24 @@
+<% content_for :title, "#{current_venue.name} — #{t('meta.tagline')}" %>
+<%= render "shared/page_header", title: current_venue.name, subtitle: t("meta.description") %>
+<section class="mx-auto grid max-w-6xl gap-8 px-5 py-10 lg:grid-cols-3">
+  <div class="lg:col-span-2">
+    <p class="text-[color:var(--color-muted)] md:text-lg"><%= @venue.description %></p>
+
+    <% if @track %>
+      <div class="card mt-8 p-6">
+        <h2 class="font-display text-xl font-bold"><%= @track.name %></h2>
+        <div class="mt-4 grid grid-cols-3 gap-4 text-center">
+          <% [[@track.length_m, "m"], [@track.corners, t("home.stat_corners")], [@track.surface, ""]].each do |v, l| %>
+            <div><div class="font-display text-2xl gradient-text"><%= v %></div><div class="text-xs text-[color:var(--color-faint)]"><%= l %></div></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <h2 class="font-display text-xl font-bold"><%= t("contact.hours") %></h2>
+    <div class="mt-4"><%= render "shared/opening_hours", opening_hours: @opening_hours %></div>
+    <%= link_to t("nav.contact"), contact_path, class: "btn btn-ghost mt-4 w-full" %>
+  </div>
+</section>

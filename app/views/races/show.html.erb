@@ -1,0 +1,25 @@
+<% content_for :title, "#{@race.name} — #{t('races.live')}" %>
+
+<%# Subscribe to live lap + status updates broadcast by Timing::Ingestor / RaceManager %>
+<%= turbo_stream_from @race.turbo_stream_channel %>
+
+<section class="mx-auto max-w-5xl px-4 py-8" data-controller="race" data-race-live-value="<%= @race.live? %>">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <%= link_to live_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" do %>← <%= t("races.live") %><% end %>
+      <h1 class="mt-2 font-display text-3xl font-black sm:text-4xl"><%= @race.name.presence || "Race ##{@race.id}" %></h1>
+      <p class="text-sm text-[color:var(--color-muted)]"><%= @race.track&.name %> <%= "· #{@race.competition.name}" if @race.competition %></p>
+    </div>
+    <%= render "races/status", race: @race %>
+  </div>
+
+  <div class="mt-6">
+    <h2 class="mb-3 font-display text-lg font-bold"><%= t("races.leaderboard") %></h2>
+    <%= render "races/leaderboard", race: @race %>
+  </div>
+
+  <p class="mt-4 text-center text-xs text-[color:var(--color-faint)]">
+    <% if @race.live? %><span class="live-dot"></span> <% end %>
+    <%= @race.live? ? "Auto-updating live" : t("races.status.#{@race.status}") %>
+  </p>
+</section>

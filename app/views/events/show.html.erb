@@ -1,0 +1,17 @@
+<% content_for :title, "#{@event.name} — #{current_venue.name}" %>
+<section class="relative overflow-hidden border-b border-[color:var(--color-line)]">
+  <% if @event.banner.attached? %><%= image_tag @event.banner, class: "absolute inset-0 -z-10 h-full w-full object-cover opacity-30" %><% end %>
+  <div class="mx-auto max-w-4xl px-5 py-14">
+    <span class="chip"><%= t("events.title") %></span>
+    <h1 class="mt-4 font-display text-4xl font-black md:text-6xl"><%= @event.name %></h1>
+    <p class="mt-3 text-[color:var(--color-muted)]"><%= l(@event.starts_at, format: :long) if @event.starts_at %> · <%= @event.location %></p>
+    <% if user_signed_in? %>
+      <%= link_to t("competitions.register"), new_event_registration_path(@event), class: "btn btn-primary mt-6" %>
+    <% else %>
+      <%= link_to t("nav.sign_in"), new_user_session_path, class: "btn btn-primary mt-6" %>
+    <% end %>
+  </div>
+</section>
+<section class="mx-auto max-w-4xl px-5 py-10">
+  <p class="text-[color:var(--color-muted)]"><%= @event.description %></p>
+</section>

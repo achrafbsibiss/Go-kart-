@@ -1,0 +1,19 @@
+<%= link_to account_bookings_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" do %>← <%= t("account.my_bookings") %><% end %>
+<div class="card mt-4 p-7">
+  <div class="flex items-center justify-between">
+    <h1 class="font-display text-2xl font-black"><%= @booking.session_price&.name || t("nav.book") %></h1>
+    <span class="chip"><%= @booking.status %></span>
+  </div>
+  <p class="mt-1 text-sm text-[color:var(--color-faint)]"><%= @booking.reference %></p>
+
+  <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
+    <div><dt class="text-[color:var(--color-faint)]"><%= t("booking.date_time") %></dt><dd class="mt-1 font-medium"><%= l(@booking.starts_at, format: :long) if @booking.starts_at %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]"><%= t("booking.party_size") %></dt><dd class="mt-1 font-medium"><%= @booking.party_size %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]"><%= t("booking.select_kart") %></dt><dd class="mt-1 font-medium"><%= @booking.kart_type&.name || t("booking.any_kart") %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]"><%= t("booking.total") %></dt><dd class="mt-1 font-display text-lg gradient-text"><%= @booking.total&.format %></dd></div>
+  </dl>
+
+  <% unless @booking.canceled? %>
+    <%= button_to t("actions.cancel"), account_booking_path(@booking), method: :delete, class: "btn btn-ghost mt-6", data: { turbo_confirm: "?" } %>
+  <% end %>
+</div>

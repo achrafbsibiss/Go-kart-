@@ -1,0 +1,12 @@
+<div class="flex items-center justify-between">
+  <h1 class="font-display text-3xl font-black"><%= t("account.profile") %></h1>
+  <%= link_to t("actions.edit"), edit_account_profile_path, class: "btn btn-ghost !px-4 !py-2 text-sm" %>
+</div>
+<div class="card mt-6 p-7">
+  <dl class="grid grid-cols-2 gap-4 text-sm">
+    <div><dt class="text-[color:var(--color-faint)]">Name</dt><dd class="mt-1 font-medium"><%= current_user.full_name %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]"><%= t("contact.email") %></dt><dd class="mt-1 font-medium"><%= current_user.email %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]">Phone</dt><dd class="mt-1 font-medium"><%= current_user.phone %></dd></div>
+    <div><dt class="text-[color:var(--color-faint)]">Locale</dt><dd class="mt-1 font-medium"><%= current_user.locale.upcase %></dd></div>
+  </dl>
+</div>

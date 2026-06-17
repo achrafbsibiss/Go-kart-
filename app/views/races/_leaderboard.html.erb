@@ -1,0 +1,29 @@
+<%# Auto-refreshed via Turbo Stream from the race channel on every new lap. %>
+<div id="race_<%= race.id %>_leaderboard" class="card overflow-hidden">
+  <div class="grid grid-cols-[2.5rem_1fr_4.5rem_4.5rem_4rem] gap-2 border-b border-[color:var(--color-line)] px-4 py-3 text-[11px] uppercase tracking-wider text-[color:var(--color-faint)] sm:grid-cols-[3rem_1fr_6rem_6rem_5rem]">
+    <span><%= t("races.pos") %></span>
+    <span><%= t("races.driver") %></span>
+    <span class="text-end"><%= t("races.laps") %></span>
+    <span class="text-end"><%= t("races.best") %></span>
+    <span class="text-end"><%= t("races.gap") %></span>
+  </div>
+
+  <% leader = race.leaderboard.first %>
+  <% race.leaderboard.each_with_index do |entry, i| %>
+    <% fastest = race.fastest_entry == entry %>
+    <div class="grid grid-cols-[2.5rem_1fr_4.5rem_4.5rem_4rem] items-center gap-2 border-b border-[color:var(--color-line)]/50 px-4 py-3 text-sm transition sm:grid-cols-[3rem_1fr_6rem_6rem_5rem] <%= 'bg-white/[0.03]' if i < 3 %>">
+      <span class="grid h-7 w-7 place-items-center rounded-lg font-display text-xs <%= i.zero? ? 'bg-[color:var(--color-amber)] text-black' : (i < 3 ? 'bg-white/10' : 'bg-white/5 text-[color:var(--color-muted)]') %>"><%= i + 1 %></span>
+      <span class="min-w-0">
+        <span class="block truncate font-medium"><%= entry.driver_name %></span>
+        <span class="text-xs text-[color:var(--color-faint)]">#<%= entry.kart_number %> · <%= entry.kart_type&.name %></span>
+      </span>
+      <span class="text-end font-mono"><%= entry.laps_completed || 0 %></span>
+      <span class="text-end font-mono <%= 'text-[color:var(--color-purple)] font-bold' if fastest %>"><%= entry.best_lap_label %></span>
+      <span class="text-end font-mono text-xs text-[color:var(--color-muted)]"><%= entry.gap_to(leader) %></span>
+    </div>
+  <% end %>
+
+  <% if race.race_entries.empty? %>
+    <p class="px-4 py-10 text-center text-sm text-[color:var(--color-faint)]">—</p>
+  <% end %>
+</div>

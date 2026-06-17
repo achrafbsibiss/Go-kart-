@@ -1,0 +1,54 @@
+<%# Generic admin form — reflects on the model's columns + attachments. %>
+<%= form_with model: [:admin, record], class: "card space-y-4 p-6" do |f| %>
+  <% if record.errors.any? %>
+    <div class="rounded-xl border border-[color:var(--color-accent)] p-3 text-sm text-[color:var(--color-accent-soft)]">
+      <%= record.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <% form_columns.each do |col| %>
+    <% next if col == "currency" %>
+    <div>
+      <label class="text-sm font-medium text-[color:var(--color-muted)]"><%= col.humanize %></label>
+      <% if col.end_with?("_id") %>
+        <% assoc = model_class.reflect_on_association(col.delete_suffix("_id").to_sym) %>
+        <% if assoc %>
+          <%= f.collection_select col.to_sym, assoc.klass.all, :id, ->(o) { o.try(:name) || o.try(:display_name) || o.try(:nickname) || "##{o.id}" }, { include_blank: true }, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% else %>
+          <%= f.number_field col.to_sym, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% end %>
+      <% else %>
+        <% case model_class.columns_hash[col]&.type %>
+        <% when :boolean %>
+          <div class="mt-1"><%= f.check_box col.to_sym, class: "accent-[color:var(--color-accent)]" %></div>
+        <% when :integer, :decimal, :float %>
+          <% if model_class.respond_to?(:defined_enums) && model_class.defined_enums.key?(col) %>
+            <%= f.select col.to_sym, model_class.defined_enums[col].keys, { include_blank: true }, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+          <% else %>
+            <%= f.number_field col.to_sym, step: :any, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+          <% end %>
+        <% when :text %>
+          <%= f.text_area col.to_sym, rows: 3, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% when :datetime %>
+          <%= f.datetime_local_field col.to_sym, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% when :time %>
+          <%= f.time_field col.to_sym, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% else %>
+          <%= f.text_field col.to_sym, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% model_class.attachment_reflections.each_key do |name| %>
+    <div>
+      <label class="text-sm font-medium text-[color:var(--color-muted)]"><%= name.humanize %></label>
+      <%= f.file_field name.to_sym, multiple: model_class.attachment_reflections[name].macro == :has_many_attached, class: "mt-1 w-full text-sm" %>
+    </div>
+  <% end %>
+
+  <div class="flex gap-3 pt-2">
+    <%= f.submit t("actions.save"), class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("actions.cancel"), polymorphic_path([:admin, model_class]), class: "btn btn-ghost" %>
+  </div>
+<% end %>

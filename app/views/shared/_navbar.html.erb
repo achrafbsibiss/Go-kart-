@@ -1,0 +1,38 @@
+<header class="sticky top-0 z-50">
+  <nav class="glass mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:my-3 md:rounded-full">
+    <%= link_to root_path, class: "flex items-center gap-2 font-display text-lg font-black tracking-widest" do %>
+      <span class="grid h-9 w-9 place-items-center rounded-xl" style="background:linear-gradient(135deg,var(--color-accent),var(--color-electric))"><%= icon(:flag, css: "h-5 w-5 text-black") %></span>
+      <span class="gradient-text"><%= current_venue.name.upcase %></span>
+    <% end %>
+
+    <div class="hidden items-center gap-1 lg:flex">
+      <% [[t("nav.karts"), karts_path], [t("nav.pricing"), pricing_index_path], [t("nav.memberships"), memberships_path], [t("nav.competitions"), competitions_path], [t("nav.live"), live_path], [t("nav.records"), records_path], [t("nav.gallery"), gallery_index_path], [t("nav.contact"), contact_path]].each do |label, path| %>
+        <%= link_to label, path, class: "rounded-full px-3 py-2 text-sm font-medium transition hover:bg-white/5 #{'text-white' if nav_active?(path)} #{'text-[color:var(--color-muted)]' unless nav_active?(path)}" %>
+      <% end %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= link_to live_path, class: "hidden items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider sm:flex" do %>
+        <span class="live-dot"></span> <%= t("nav.live") %>
+      <% end %>
+
+      <details class="relative">
+        <summary class="chip cursor-pointer list-none"><%= I18n.locale.to_s.upcase %></summary>
+        <div class="card absolute end-0 mt-2 w-36 overflow-hidden p-1">
+          <% locale_switcher_options.each do |loc, label| %>
+            <%= link_to label, url_for(locale: loc), class: "block rounded-lg px-3 py-2 text-sm hover:bg-white/5 #{'text-[color:var(--color-accent)]' if I18n.locale == loc}" %>
+          <% end %>
+        </div>
+      </details>
+
+      <% if user_signed_in? %>
+        <%= link_to account_dashboard_path, class: "btn btn-ghost !px-3 !py-2 text-sm" do %><%= icon(:user, css: "h-5 w-5") %><% end %>
+        <% if current_user.staff_or_admin? %><%= link_to t("nav.admin"), admin_dashboard_path, class: "hidden text-sm text-[color:var(--color-muted)] hover:text-white md:block" %><% end %>
+      <% else %>
+        <%= link_to t("nav.sign_in"), new_user_session_path, class: "hidden text-sm text-[color:var(--color-muted)] hover:text-white sm:block" %>
+      <% end %>
+
+      <%= link_to t("nav.book"), new_account_booking_path, class: "btn btn-primary !px-4 !py-2 text-sm" %>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,6 @@
+<%= link_to account_registrations_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" do %>← <%= t("account.my_registrations") %><% end %>
+<div class="card mt-4 p-7">
+  <span class="chip"><%= @registration.status %></span>
+  <h1 class="mt-3 font-display text-2xl font-black"><%= @registration.registerable.try(:name) %></h1>
+  <p class="mt-1 text-sm text-[color:var(--color-faint)]"><%= @registration.reference %></p>
+</div>

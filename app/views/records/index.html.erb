@@ -1,0 +1,29 @@
+<% content_for :title, "#{t('records.title')} — #{current_venue.name}" %>
+<section class="mx-auto max-w-5xl px-5 py-10">
+  <h1 class="font-display text-4xl font-black"><%= t("records.title") %></h1>
+  <p class="mt-2 text-[color:var(--color-muted)]"><%= t("records.subtitle") %></p>
+
+  <div class="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+    <% { day: :day, week: :week, month: :month, all: :all }.each do |key, _| %>
+      <% rec = @records[key] %>
+      <div class="glass p-5 text-center">
+        <div class="text-xs uppercase tracking-widest text-[color:var(--color-muted)]"><%= t("records.#{key}") %></div>
+        <div class="mt-2 font-display text-2xl font-bold gradient-text"><%= rec ? rec.label : "—" %></div>
+        <div class="mt-1 truncate text-xs text-[color:var(--color-faint)]"><%= rec&.driver&.display_name %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <h2 class="mt-12 font-display text-xl font-bold"><%= t("records.all") %></h2>
+  <div class="card mt-4 overflow-hidden">
+    <% @top_all.each_with_index do |bl, i| %>
+      <div class="flex items-center gap-4 border-b border-[color:var(--color-line)]/50 px-4 py-3">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-white/5 font-display text-xs"><%= i + 1 %></span>
+        <span class="flex-1 truncate"><%= bl.driver&.display_name %></span>
+        <span class="text-xs text-[color:var(--color-faint)]"><%= bl.kart_type&.name %></span>
+        <span class="font-mono text-[color:var(--color-electric)]"><%= bl.label %></span>
+      </div>
+    <% end %>
+    <% if @top_all.empty? %><p class="px-4 py-12 text-center text-[color:var(--color-faint)]"><%= t("records.no_data") %></p><% end %>
+  </div>
+</section>

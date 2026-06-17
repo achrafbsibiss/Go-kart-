@@ -1,0 +1,16 @@
+<%# Native-app-style bottom navigation — mobile only, one-handed reach %>
+<nav class="bottom-nav">
+  <% items = [
+       [t("nav.home"), :home, root_path],
+       [t("nav.live"), :flag, live_path],
+       [t("nav.book"), :ticket, new_account_booking_path],
+       [t("nav.ranking"), :trophy, leaderboards_path],
+       [user_signed_in? ? t("nav.profile") : t("nav.sign_in"), :user, user_signed_in? ? account_dashboard_path : new_user_session_path]
+     ] %>
+  <% items.each do |label, ico, path| %>
+    <%= link_to path, class: "#{'active' if nav_active?(path)}" do %>
+      <span class="nav-ico"><%= icon(ico, css: "h-6 w-6") %></span>
+      <span><%= label %></span>
+    <% end %>
+  <% end %>
+</nav>

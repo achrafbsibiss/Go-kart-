@@ -1,0 +1,54 @@
+<% content_for :title, "#{@competition.name} — #{current_venue.name}" %>
+<section class="relative overflow-hidden border-b border-[color:var(--color-line)]">
+  <% if @competition.banner.attached? %>
+    <%= image_tag @competition.banner, class: "absolute inset-0 -z-10 h-full w-full object-cover opacity-30" %>
+  <% end %>
+  <div class="mx-auto max-w-5xl px-5 py-14">
+    <span class="chip"><%= t("competitions.format.#{@competition.format}") %></span>
+    <h1 class="mt-4 font-display text-4xl font-black md:text-6xl"><%= @competition.name %></h1>
+    <p class="mt-3 text-[color:var(--color-muted)]"><%= l(@competition.starts_at, format: :long) if @competition.starts_at %> · <%= @competition.track&.name %></p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <% if @competition.accepting_registrations? %>
+        <%= link_to t("competitions.register"), new_competition_registration_path(@competition), class: "btn btn-primary" %>
+      <% end %>
+      <span class="btn btn-ghost"><%= t("competitions.entry_fee") %>: <%= @competition.entry_fee_cents.to_i.positive? ? @competition.entry_fee.format : t("competitions.free") %></span>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-5 py-10">
+  <p class="text-[color:var(--color-muted)]"><%= @competition.description %></p>
+
+  <% if @standings.any? %>
+    <h2 class="mt-10 font-display text-2xl font-bold"><%= t("competitions.standings") %></h2>
+    <div class="card mt-4 overflow-hidden">
+      <% @standings.each_with_index do |s, i| %>
+        <div class="flex items-center gap-4 border-b border-[color:var(--color-line)]/50 px-4 py-3">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-white/5 font-display text-xs"><%= i + 1 %></span>
+          <span class="flex-1 truncate"><%= s.driver&.display_name %></span>
+          <span class="font-display text-[color:var(--color-electric)]"><%= s.points %> <%= t("drivers.points") %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @matches.any? %>
+    <h2 class="mt-10 font-display text-2xl font-bold"><%= t("competitions.bracket") %></h2>
+    <div class="mt-4 grid gap-3 md:grid-cols-2">
+      <% @matches.each do |m| %>
+        <div class="card flex items-center justify-between p-4 text-sm">
+          <span class="<%= 'font-bold text-[color:var(--color-electric)]' if m.winner_id == m.driver_a_id %>"><%= m.driver_a&.display_name || "TBD" %></span>
+          <span class="chip"><%= m.score.presence || "vs" %></span>
+          <span class="<%= 'font-bold text-[color:var(--color-electric)]' if m.winner_id == m.driver_b_id %>"><%= m.driver_b&.display_name || "TBD" %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @races.any? %>
+    <h2 class="mt-10 font-display text-2xl font-bold"><%= t("admin.races") %></h2>
+    <div class="mt-4 grid gap-3 md:grid-cols-2">
+      <% @races.each { |race| %><%= render "races/live_card", race: race %><% } %>
+    </div>
+  <% end %>
+</section>

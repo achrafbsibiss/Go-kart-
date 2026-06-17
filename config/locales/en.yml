@@ -1,0 +1,182 @@
+en:
+  locales:
+    fr: Français
+    en: English
+    ar: العربية
+  meta:
+    tagline: "Premium Karting & Live Race Timing"
+    description: "Race premium karts, track live timing and lap records, book sessions and join competitions at our world-class circuit."
+  nav:
+    home: Home
+    karts: Karts
+    pricing: Pricing
+    memberships: Membership
+    competitions: Competitions
+    events: Events
+    live: Live
+    records: Records
+    gallery: Gallery
+    contact: Contact
+    ranking: Ranking
+    profile: Profile
+    admin: Admin
+    sign_in: Sign in
+    book: Book
+  footer:
+    explore: Explore
+    visit: Visit us
+    address_tbd: "Address coming soon"
+    rights: All rights reserved.
+  home:
+    hero_eyebrow: "Adrenaline. Precision. Speed."
+    hero_title_1: "FEEL THE"
+    hero_title_2: "APEX"
+    hero_sub: "State-of-the-art electric and combustion karts. Real-time race timing. Championship-grade competition."
+    book_now: Book your session
+    watch_live: Watch live
+    live_now: Live now
+    no_live: "No race is live right now"
+    upcoming_events: Upcoming events
+    featured_karts: Featured karts
+    view_all: View all
+    stat_top_speed: Top speed
+    stat_track: Track length
+    stat_corners: Corners
+    open_now: Open now
+    closed_now: Closed
+  karts:
+    title: Our karts
+    subtitle: "A fleet engineered for every driver — from first-timers to podium hunters."
+    top_speed: Top speed
+    power: Power
+    weight: Weight
+    min_age: Min age
+    engine: Engine
+    book_this: Book this kart
+    specs: Specifications
+  pricing:
+    title: Sessions & pricing
+    subtitle: "Transparent pricing. Pick your format and hit the track."
+    book: Book
+    minutes: min
+    laps: laps
+  memberships:
+    title: Membership plans
+    subtitle: "Drive more, pay less. Member perks, priority booking and exclusive events."
+    popular: Most popular
+    choose: Choose plan
+    period:
+      monthly: "/month"
+      quarterly: "/quarter"
+      yearly: "/year"
+  competitions:
+    title: Competitions
+    subtitle: "Sprints, endurance races and full championships."
+    upcoming: Upcoming
+    register: Register
+    standings: Standings
+    bracket: Bracket
+    spots_left: "%{count} spots left"
+    entry_fee: Entry fee
+    free: Free
+    format:
+      sprint: Sprint
+      endurance: Endurance
+      championship: Championship
+      knockout: Knockout
+  events:
+    title: Events
+    subtitle: "Parties, corporate days and special nights at the track."
+  gallery:
+    title: Gallery
+    subtitle: "The track, the karts, the moments."
+  contact:
+    title: Contact & location
+    subtitle: "Come race with us."
+    name: Your name
+    email: Email
+    message: Message
+    send: Send message
+    hours: Opening hours
+    find_us: Find us
+    closed: Closed
+    sent: "Thanks! We'll get back to you shortly."
+  races:
+    live: Live races
+    upcoming: Scheduled
+    finished: Finished
+    no_live: "No live races at the moment. Check the schedule below."
+    leaderboard: Leaderboard
+    pos: Pos
+    driver: Driver
+    laps: Laps
+    best: Best
+    last: Last
+    gap: Gap
+    fastest_lap: Fastest lap
+    status:
+      scheduled: Scheduled
+      live: Live
+      finished: Finished
+      canceled: Canceled
+    watch: Watch live
+  records:
+    title: Lap records
+    subtitle: "The fastest laps on our circuit."
+    day: Today
+    week: This week
+    month: This month
+    all: All-time
+    no_data: "No records yet — be the first."
+  drivers:
+    title: Drivers
+    subtitle: "Rankings, stats and race history."
+    races: Races
+    best_lap: Best lap
+    points: Points
+    history: Race history
+    achievements: Achievements
+  account:
+    dashboard: Dashboard
+    welcome: "Welcome back, %{name}"
+    my_bookings: My bookings
+    my_registrations: My registrations
+    my_subscriptions: Membership
+    profile: Profile
+    new_booking: New booking
+    upcoming: Upcoming
+    none: "Nothing here yet."
+  booking:
+    title: Book a session
+    select_session: Select a session
+    select_kart: Kart type
+    any_kart: Any available kart
+    date_time: Date & time
+    party_size: Drivers
+    notes: Notes
+    pay: Pay & confirm
+    confirmed: "Booking confirmed! Reference %{ref}"
+    summary: Summary
+    total: Total
+  admin:
+    dashboard: Admin dashboard
+    races: Races
+    new_race: New race
+    start: Start race
+    finish: Finish race
+    manage: Manage
+    entries: Entries
+    overview: Overview
+    today_bookings: Today's bookings
+    live_races: Live races
+    registrations: Registrations
+  errors:
+    not_authorized: "You are not authorized to do that."
+  actions:
+    save: Save
+    cancel: Cancel
+    delete: Delete
+    edit: Edit
+    create: Create
+    back: Back
+    view: View

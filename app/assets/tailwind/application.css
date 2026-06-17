@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   Karting — premium motorsport design system (Tailwind v4, CSS-first config)
+   Dark theme, vibrant accents, glassmorphism, mobile-first.
+   =========================================================================== */
+@theme {
+  /* Surfaces */
+  --color-base: #06070a;
+  --color-surface: #0d0f15;
+  --color-surface-2: #141822;
+  --color-elevated: #1b2130;
+  --color-line: #232a39;
+
+  /* Accents — racing red + electric cyan */
+  --color-accent: #ff2d2d;
+  --color-accent-soft: #ff5a5a;
+  --color-electric: #15f0c8;
+  --color-amber: #ffb020;
+  --color-purple: #7c3aed;
+
+  /* Text */
+  --color-ink: #f4f6fb;
+  --color-muted: #9aa3b5;
+  --color-faint: #5b6477;
+
+  /* Type */
+  --font-display: "Orbitron", "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii + shadow */
+  --radius-xl2: 1.5rem;
+  --shadow-glow: 0 0 40px -10px var(--color-accent);
+}
+
+@layer base {
+  :root { color-scheme: dark; }
+
+  body {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(124, 58, 237, 0.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(21, 240, 200, 0.08), transparent 55%),
+      var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: 0.02em; }
+
+  /* RTL flips for Arabic */
+  [dir="rtl"] body { text-align: right; }
+}
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: var(--radius-xl2);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl2);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-semibold transition active:scale-95;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-soft));
+    color: #fff;
+    box-shadow: 0 10px 30px -10px var(--color-accent);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-electric {
+    background: linear-gradient(135deg, var(--color-electric), #0fd0ad);
+    color: #04150f;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--color-line);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-electric));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Mobile bottom navigation */
+  .bottom-nav {
+    @apply fixed inset-x-0 bottom-0 z-50 flex items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] pt-2 md:hidden;
+    background: rgba(8, 9, 13, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-top: 1px solid var(--color-line);
+  }
+  .bottom-nav a { @apply flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 text-[11px] font-medium; color: var(--color-muted); }
+  .bottom-nav a.active { color: var(--color-ink); }
+  .bottom-nav a.active .nav-ico { color: var(--color-accent); }
+
+  /* Live pulse dot */
+  .live-dot { @apply inline-block h-2.5 w-2.5 rounded-full; background: var(--color-accent); box-shadow: 0 0 0 0 var(--color-accent); animation: pulse 1.6s infinite; }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,45,45,0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(255,45,45,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,45,45,0); }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise 0.6s both; }

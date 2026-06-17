@@ -1,0 +1,11 @@
+<div id="race_<%= race.id %>_status" class="flex items-center gap-3">
+  <span class="chip <%= 'border-[color:var(--color-accent)] text-white' if race.live? %>">
+    <% if race.live? %><span class="live-dot"></span><% end %>
+    <%= t("races.status.#{race.status}") %>
+  </span>
+  <% if (fast = race.fastest_entry) %>
+    <span class="chip border-[color:var(--color-purple)]">
+      <%= icon(:bolt, css: "h-3.5 w-3.5") %> <%= t("races.fastest_lap") %>: <span class="font-mono"><%= fast.best_lap_label %></span>
+    </span>
+  <% end %>
+</div>

@@ -1,0 +1,11 @@
+<% content_for :title, "#{t('karts.title')} — #{current_venue.name}" %>
+<%= render "shared/page_header", title: t("karts.title"), subtitle: t("karts.subtitle") %>
+<section class="mx-auto max-w-7xl px-5 py-10">
+  <% if @karts.any? %>
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <% @karts.each { |kart| %><%= render "karts/card", kart: kart %><% } %>
+    </div>
+  <% else %>
+    <p class="text-[color:var(--color-muted)]"><%= t("account.none") %></p>
+  <% end %>
+</section>

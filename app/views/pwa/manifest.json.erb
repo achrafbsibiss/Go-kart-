@@ -1,0 +1,20 @@
+{
+  "name": "<%= current_venue.name %> — Karting",
+  "short_name": "<%= current_venue.name.truncate(12, omission: "") %>",
+  "icons": [
+    { "src": "/icon.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/icon.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "description": "<%= t('meta.description') %>",
+  "categories": ["sports", "entertainment"],
+  "theme_color": "#06070a",
+  "background_color": "#06070a",
+  "shortcuts": [
+    { "name": "<%= t('nav.live') %>", "url": "/live" },
+    { "name": "<%= t('nav.book') %>", "url": "/account/bookings/new" }
+  ]
+}

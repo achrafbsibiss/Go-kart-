@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" dir="<%= rtl? ? "rtl" : "ltr" %>">
+  <head>
+    <title><%= content_for(:title) || "#{t('account.dashboard')} — #{current_venue.name}" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#06070a">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="pb-24 md:pb-0">
+    <%= render "shared/navbar" %>
+    <% if user_signed_in? %><%= turbo_stream_from "notifications_user_#{current_user.id}" %><% end %>
+    <div id="notifications" class="fixed right-4 top-20 z-[60] flex w-80 max-w-[90vw] flex-col gap-2"></div>
+    <%= render "shared/flash" %>
+
+    <div class="mx-auto flex max-w-7xl gap-8 px-5 py-8">
+      <aside class="hidden w-56 shrink-0 md:block">
+        <nav class="card sticky top-24 overflow-hidden p-2">
+          <% [[t("account.dashboard"), :chart, account_dashboard_path], [t("account.my_bookings"), :ticket, account_bookings_path], [t("account.my_registrations"), :flag, account_registrations_path], [t("account.my_subscriptions"), :trophy, account_subscriptions_path], [t("account.profile"), :user, account_profile_path]].each do |label, ico, path| %>
+            <%= link_to path, class: "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition #{nav_active?(path) ? 'bg-white/5 text-white' : 'text-[color:var(--color-muted)] hover:bg-white/5'}" do %>
+              <%= icon(ico, css: "h-5 w-5") %> <%= label %>
+            <% end %>
+          <% end %>
+          <%= button_to t("nav.sign_in").then { "Sign out" }, destroy_user_session_path, method: :delete, class: "mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[color:var(--color-muted)] hover:bg-white/5" %>
+        </nav>
+      </aside>
+      <main class="min-w-0 flex-1"><%= yield %></main>
+    </div>
+
+    <%= render "shared/bottom_nav" %>
+  </body>
+</html>

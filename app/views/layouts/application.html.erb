@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" dir="<%= rtl? ? "rtl" : "ltr" %>">
+  <head>
+    <title><%= content_for(:title) || "#{current_venue.name} — #{t('meta.tagline')}" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+    <meta name="description" content="<%= content_for(:description) || t('meta.description') %>">
+    <meta name="theme-color" content="#06070a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%# Open Graph / SEO %>
+    <meta property="og:title" content="<%= content_for(:title) || current_venue.name %>">
+    <meta property="og:description" content="<%= content_for(:description) || t('meta.description') %>">
+    <meta property="og:type" content="website">
+
+    <%= yield :head %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="manifest" href="<%= pwa_manifest_path(format: :json) rescue "/manifest.json" %>">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="pb-24 md:pb-0">
+    <%= render "shared/navbar" %>
+
+    <%# Live notifications stream (broadcast + per-user) %>
+    <%= turbo_stream_from "notifications_all" %>
+    <% if user_signed_in? %><%= turbo_stream_from "notifications_user_#{current_user.id}" %><% end %>
+    <div id="notifications" class="fixed right-4 top-20 z-[60] flex w-80 max-w-[90vw] flex-col gap-2"></div>
+
+    <%= render "shared/flash" %>
+
+    <main class="min-h-[60vh]">
+      <%= yield %>
+    </main>
+
+    <%= render "shared/footer" %>
+    <%= render "shared/bottom_nav" %>
+  </body>
+</html>

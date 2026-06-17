@@ -1,0 +1,182 @@
+ar:
+  locales:
+    fr: Français
+    en: English
+    ar: العربية
+  meta:
+    tagline: "كارتينغ فاخر وتوقيت مباشر للسباقات"
+    description: "قُد كارتات فاخرة، تابع التوقيت المباشر وأرقام اللفات القياسية، احجز جلساتك وشارك في المسابقات على حلبتنا العالمية."
+  nav:
+    home: الرئيسية
+    karts: الكارتات
+    pricing: الأسعار
+    memberships: العضوية
+    competitions: المسابقات
+    events: الفعاليات
+    live: مباشر
+    records: الأرقام القياسية
+    gallery: المعرض
+    contact: اتصل بنا
+    ranking: الترتيب
+    profile: الملف
+    admin: الإدارة
+    sign_in: تسجيل الدخول
+    book: احجز
+  footer:
+    explore: استكشف
+    visit: زورونا
+    address_tbd: "العنوان قريباً"
+    rights: جميع الحقوق محفوظة.
+  home:
+    hero_eyebrow: "أدرينالين. دقة. سرعة."
+    hero_title_1: "عِش"
+    hero_title_2: "القمة"
+    hero_sub: "كارتات كهربائية وبنزينية من أحدث جيل. توقيت مباشر للسباقات. منافسة بمستوى البطولات."
+    book_now: احجز جلستك
+    watch_live: شاهد مباشرة
+    live_now: مباشر الآن
+    no_live: "لا يوجد سباق مباشر حالياً"
+    upcoming_events: فعاليات قادمة
+    featured_karts: كارتات مميزة
+    view_all: عرض الكل
+    stat_top_speed: السرعة القصوى
+    stat_track: طول الحلبة
+    stat_corners: المنعطفات
+    open_now: مفتوح
+    closed_now: مغلق
+  karts:
+    title: كاراتنا
+    subtitle: "أسطول مصمم لكل سائق — من المبتدئين إلى أبطال المنصات."
+    top_speed: السرعة القصوى
+    power: القوة
+    weight: الوزن
+    min_age: الحد الأدنى للعمر
+    engine: المحرك
+    book_this: احجز هذا الكارت
+    specs: المواصفات
+  pricing:
+    title: الجلسات والأسعار
+    subtitle: "أسعار واضحة. اختر صيغتك وانطلق."
+    book: احجز
+    minutes: دقيقة
+    laps: لفة
+  memberships:
+    title: باقات العضوية
+    subtitle: "قُد أكثر، وادفع أقل. مزايا الأعضاء، أولوية الحجز وفعاليات حصرية."
+    popular: الأكثر رواجاً
+    choose: اختر الباقة
+    period:
+      monthly: "/شهر"
+      quarterly: "/ربع سنة"
+      yearly: "/سنة"
+  competitions:
+    title: المسابقات
+    subtitle: "سباقات سريعة، سباقات تحمل وبطولات كاملة."
+    upcoming: قادمة
+    register: سجّل
+    standings: الترتيب
+    bracket: الجدول
+    spots_left: "بقي %{count} مقعد"
+    entry_fee: رسوم المشاركة
+    free: مجاني
+    format:
+      sprint: سريع
+      endurance: تحمل
+      championship: بطولة
+      knockout: إقصائي
+  events:
+    title: الفعاليات
+    subtitle: "حفلات، أيام للشركات وأمسيات خاصة على الحلبة."
+  gallery:
+    title: المعرض
+    subtitle: "الحلبة، الكارتات، اللحظات."
+  contact:
+    title: اتصل والموقع
+    subtitle: "تعال وتسابق معنا."
+    name: اسمك
+    email: البريد الإلكتروني
+    message: رسالة
+    send: إرسال
+    hours: ساعات العمل
+    find_us: موقعنا
+    closed: مغلق
+    sent: "شكراً! سنعاود التواصل معك قريباً."
+  races:
+    live: سباقات مباشرة
+    upcoming: مجدولة
+    finished: منتهية
+    no_live: "لا توجد سباقات مباشرة حالياً. راجع الجدول أدناه."
+    leaderboard: الترتيب
+    pos: المركز
+    driver: السائق
+    laps: اللفات
+    best: الأفضل
+    last: الأخير
+    gap: الفارق
+    fastest_lap: أسرع لفة
+    status:
+      scheduled: مجدولة
+      live: مباشر
+      finished: منتهية
+      canceled: ملغاة
+    watch: شاهد مباشرة
+  records:
+    title: أرقام اللفات القياسية
+    subtitle: "أسرع اللفات على حلبتنا."
+    day: اليوم
+    week: هذا الأسبوع
+    month: هذا الشهر
+    all: كل الأوقات
+    no_data: "لا توجد أرقام بعد — كن الأول."
+  drivers:
+    title: السائقون
+    subtitle: "الترتيب والإحصاءات وسجل السباقات."
+    races: السباقات
+    best_lap: أفضل لفة
+    points: النقاط
+    history: السجل
+    achievements: الإنجازات
+  account:
+    dashboard: لوحة التحكم
+    welcome: "أهلاً بعودتك، %{name}"
+    my_bookings: حجوزاتي
+    my_registrations: تسجيلاتي
+    my_subscriptions: العضوية
+    profile: الملف الشخصي
+    new_booking: حجز جديد
+    upcoming: قادمة
+    none: "لا شيء هنا بعد."
+  booking:
+    title: احجز جلسة
+    select_session: اختر جلسة
+    select_kart: نوع الكارت
+    any_kart: أي كارت متاح
+    date_time: التاريخ والوقت
+    party_size: السائقون
+    notes: ملاحظات
+    pay: ادفع وأكّد
+    confirmed: "تم تأكيد الحجز! المرجع %{ref}"
+    summary: الملخص
+    total: المجموع
+  admin:
+    dashboard: لوحة الإدارة
+    races: السباقات
+    new_race: سباق جديد
+    start: ابدأ
+    finish: أنهِ
+    manage: إدارة
+    entries: المشاركون
+    overview: نظرة عامة
+    today_bookings: حجوزات اليوم
+    live_races: سباقات مباشرة
+    registrations: التسجيلات
+  errors:
+    not_authorized: "غير مصرّح لك بهذا الإجراء."
+  actions:
+    save: حفظ
+    cancel: إلغاء
+    delete: حذف
+    edit: تعديل
+    create: إنشاء
+    back: رجوع
+    view: عرض

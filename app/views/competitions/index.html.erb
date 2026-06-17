@@ -1,0 +1,37 @@
+<% content_for :title, "#{t('competitions.title')} — #{current_venue.name}" %>
+<%= render "shared/page_header", title: t("competitions.title"), subtitle: t("competitions.subtitle") %>
+<section class="mx-auto max-w-6xl px-5 py-10">
+  <h2 class="font-display text-2xl font-bold"><%= t("competitions.upcoming") %></h2>
+  <% if @upcoming.any? %>
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      <% @upcoming.each do |c| %>
+        <%= link_to competition_path(c), class: "card group overflow-hidden hover:border-white/20" do %>
+          <div class="relative h-36 bg-[color:var(--color-surface-2)]">
+            <% if c.banner.attached? %><%= image_tag c.banner, class: "h-full w-full object-cover opacity-80" %><% end %>
+            <div class="absolute inset-0 bg-gradient-to-t from-[color:var(--color-surface)] to-transparent"></div>
+            <span class="chip absolute left-4 top-4"><%= t("competitions.format.#{c.format}") %></span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-display text-xl font-bold"><%= c.name %></h3>
+            <p class="mt-1 text-sm text-[color:var(--color-muted)]"><%= l(c.starts_at, format: :long) if c.starts_at %></p>
+            <div class="mt-3 flex items-center justify-between text-sm">
+              <span class="text-[color:var(--color-faint)]"><%= c.spots_left ? t("competitions.spots_left", count: c.spots_left) : "" %></span>
+              <span class="font-display text-[color:var(--color-electric)]"><%= c.entry_fee_cents.to_i.positive? ? c.entry_fee.format : t("competitions.free") %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="mt-4 text-[color:var(--color-muted)]"><%= t("account.none") %></p>
+  <% end %>
+
+  <% if @past.any? %>
+    <h2 class="mt-14 font-display text-2xl font-bold"><%= t("races.finished") %></h2>
+    <div class="mt-5 grid gap-3 md:grid-cols-3">
+      <% @past.each do |c| %>
+        <%= link_to c.name, competition_path(c), class: "card p-5 hover:border-white/20" %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

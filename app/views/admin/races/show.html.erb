@@ -1,0 +1,53 @@
+<% content_for :title, @record.name %>
+<%= link_to "← #{t('admin.races')}", admin_races_path, class: "text-sm text-[color:var(--color-muted)] hover:text-white" %>
+
+<div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+  <h1 class="font-display text-3xl font-black"><%= @record.name.presence || "Race ##{@record.id}" %></h1>
+  <div class="flex items-center gap-2">
+    <% if @record.scheduled? %>
+      <%= button_to t("admin.start"), start_admin_race_path(@record), class: "btn btn-primary !px-4 !py-2 text-sm" %>
+    <% elsif @record.live? %>
+      <%= button_to t("admin.finish"), finish_admin_race_path(@record), class: "btn btn-ghost !px-4 !py-2 text-sm" %>
+      <%= link_to t("races.watch"), race_path(@record), class: "btn btn-electric !px-4 !py-2 text-sm", target: "_blank" %>
+    <% end %>
+    <%= link_to t("actions.edit"), edit_admin_race_path(@record), class: "btn btn-ghost !px-4 !py-2 text-sm" %>
+  </div>
+</div>
+<p class="mt-1 text-sm text-[color:var(--color-muted)]"><%= t("races.status.#{@record.status}") %> · <%= @record.track&.name %> · <%= @record.total_laps %> laps</p>
+
+<div class="mt-8 grid gap-6 lg:grid-cols-[1fr_22rem]">
+  <div>
+    <h2 class="font-display text-xl font-bold"><%= t("admin.entries") %></h2>
+    <div class="card mt-3 overflow-hidden">
+      <% @record.race_entries.by_grid.includes(:driver, :kart_type).each do |entry| %>
+        <div class="flex items-center justify-between border-b border-[color:var(--color-line)]/50 px-4 py-3 text-sm">
+          <div>
+            <span class="font-medium">#<%= entry.kart_number %> <%= entry.driver_name %></span>
+            <span class="text-xs text-[color:var(--color-faint)]"><%= entry.kart_type&.name %> · <%= entry.transponder_id %></span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[color:var(--color-electric)]"><%= entry.best_lap_label %></span>
+            <%= button_to "✕", admin_race_race_entry_path(@record, entry), method: :delete, class: "text-[color:var(--color-faint)] hover:text-[color:var(--color-accent)]" %>
+          </div>
+        </div>
+      <% end %>
+      <% if @record.race_entries.empty? %><p class="px-4 py-8 text-center text-sm text-[color:var(--color-faint)]"><%= t("account.none") %></p><% end %>
+    </div>
+  </div>
+
+  <aside class="lg:sticky lg:top-24 lg:self-start">
+    <div class="card p-5">
+      <h3 class="font-display font-bold"><%= t("actions.create") %> <%= t("admin.entries") %></h3>
+      <%= form_with url: admin_race_race_entries_path(@record), class: "mt-4 space-y-3" do |f| %>
+        <%= f.fields_for :race_entry do |e| %>
+          <%= e.select :driver_id, @drivers.map { |d| [d.display_name, d.id] }, { include_blank: t("races.driver") }, class: "w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5 text-sm" %>
+          <%= e.select :kart_type_id, @kart_types.map { |k| [k.name, k.id] }, { include_blank: t("booking.select_kart") }, class: "w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5 text-sm" %>
+          <%= e.number_field :kart_number, placeholder: "Kart #", class: "w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5 text-sm" %>
+          <%= e.text_field :transponder_id, placeholder: "Transponder ID", class: "w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5 text-sm" %>
+          <%= e.number_field :grid_position, placeholder: "Grid", class: "w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-2.5 text-sm" %>
+        <% end %>
+        <%= f.submit t("actions.create"), class: "btn btn-primary w-full cursor-pointer text-sm" %>
+      <% end %>
+    </div>
+  </aside>
+</div>

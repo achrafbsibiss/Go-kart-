@@ -1,0 +1,30 @@
+<% title = model_class.model_name.human(count: 2) %>
+<% content_for :title, title %>
+<div class="flex items-center justify-between">
+  <h1 class="font-display text-3xl font-black"><%= title %></h1>
+  <%= link_to t("actions.create"), new_polymorphic_path([:admin, model_class]), class: "btn btn-primary !px-4 !py-2 text-sm" rescue nil %>
+</div>
+
+<div class="card mt-6 overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-[color:var(--color-line)] text-start text-xs uppercase tracking-wider text-[color:var(--color-faint)]">
+        <% resource_columns.first(5).each do |col| %><th class="px-4 py-3 text-start"><%= col.humanize %></th><% end %>
+        <th class="px-4 py-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @records.each do |record| %>
+        <tr class="border-b border-[color:var(--color-line)]/50 hover:bg-white/[0.02]">
+          <% resource_columns.first(5).each do |col| %>
+            <td class="px-4 py-3"><%= truncate(record.public_send(col).to_s, length: 40) %></td>
+          <% end %>
+          <td class="px-4 py-3 text-end">
+            <%= link_to t("actions.edit"), polymorphic_path([:edit, :admin, record]), class: "text-[color:var(--color-muted)] hover:text-white" rescue nil %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @records.empty? %><p class="px-4 py-12 text-center text-[color:var(--color-faint)]"><%= t("account.none") %></p><% end %>
+</div>

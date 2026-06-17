@@ -1,0 +1,15 @@
+<% content_for :title, "#{t('competitions.register')} — #{@competition.name}" %>
+<section class="mx-auto max-w-lg px-5 py-12">
+  <h1 class="font-display text-3xl font-black"><%= t("competitions.register") %></h1>
+  <p class="mt-2 text-[color:var(--color-muted)]"><%= @competition.name %> · <%= l(@competition.starts_at, format: :long) if @competition.starts_at %></p>
+
+  <div class="card mt-6 p-6">
+    <div class="flex items-center justify-between">
+      <span><%= t("competitions.entry_fee") %></span>
+      <span class="font-display text-xl gradient-text"><%= @competition.entry_fee_cents.to_i.positive? ? @competition.entry_fee.format : t("competitions.free") %></span>
+    </div>
+    <%= form_with url: competition_registrations_path(@competition), method: :post do |f| %>
+      <%= f.submit t("competitions.register"), class: "btn btn-primary mt-5 w-full cursor-pointer" %>
+    <% end %>
+  </div>
+</section>

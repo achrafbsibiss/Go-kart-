@@ -1,0 +1,41 @@
+<% content_for :title, "#{t('contact.title')} — #{current_venue.name}" %>
+<%= render "shared/page_header", title: t("contact.title"), subtitle: t("contact.subtitle") %>
+<section class="mx-auto grid max-w-6xl gap-8 px-5 py-10 lg:grid-cols-2">
+  <div>
+    <h2 class="font-display text-xl font-bold"><%= t("contact.find_us") %></h2>
+    <div class="card mt-4 overflow-hidden">
+      <% if @venue.latitude && @venue.longitude %>
+        <iframe class="h-72 w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=<%= @venue.longitude.to_f - 0.01 %>,<%= @venue.latitude.to_f - 0.01 %>,<%= @venue.longitude.to_f + 0.01 %>,<%= @venue.latitude.to_f + 0.01 %>&layer=mapnik&marker=<%= @venue.latitude %>,<%= @venue.longitude %>"></iframe>
+      <% else %>
+        <div class="grid h-72 place-items-center text-[color:var(--color-faint)]"><%= icon(:pin, css: "h-10 w-10") %></div>
+      <% end %>
+      <div class="p-5 text-sm text-[color:var(--color-muted)]">
+        <p class="flex items-center gap-2"><%= icon(:pin, css: "h-4 w-4") %> <%= @venue.address %>, <%= @venue.city %></p>
+        <p class="mt-2"><%= @venue.phone %> · <%= @venue.email %></p>
+      </div>
+    </div>
+
+    <h2 class="mt-8 font-display text-xl font-bold"><%= t("contact.hours") %></h2>
+    <div class="mt-4"><%= render "shared/opening_hours", opening_hours: @opening_hours %></div>
+  </div>
+
+  <div>
+    <h2 class="font-display text-xl font-bold"><%= t("contact.send") %></h2>
+    <%= form_with url: contact_path, method: :post, class: "card mt-4 space-y-4 p-6" do |f| %>
+      <div>
+        <label class="text-sm text-[color:var(--color-muted)]"><%= t("contact.name") %></label>
+        <%= f.text_field :name, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+      </div>
+      <div>
+        <label class="text-sm text-[color:var(--color-muted)]"><%= t("contact.email") %></label>
+        <%= f.email_field :email, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+      </div>
+      <div>
+        <label class="text-sm text-[color:var(--color-muted)]"><%= t("contact.message") %></label>
+        <%= f.text_area :message, rows: 5, class: "mt-1 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+      </div>
+      <%= f.submit t("contact.send"), class: "btn btn-primary w-full cursor-pointer" %>
+    <% end %>
+  </div>
+</section>

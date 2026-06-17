@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" dir="<%= rtl? ? "rtl" : "ltr" %>">
+  <head>
+    <title><%= content_for(:title) || "#{t('admin.dashboard')} — #{current_venue.name}" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#06070a">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <div class="flex min-h-screen">
+      <aside class="hidden w-60 shrink-0 border-e border-[color:var(--color-line)] bg-[color:var(--color-surface)] lg:block">
+        <div class="sticky top-0 p-4">
+          <%= link_to root_path, class: "flex items-center gap-2 px-2 py-3 font-display text-lg font-black" do %>
+            <span class="gradient-text"><%= current_venue.name.upcase %></span>
+          <% end %>
+          <nav class="mt-4 space-y-1">
+            <% [[t("admin.overview"), admin_dashboard_path],
+                [t("admin.races"), admin_races_path],
+                [t("nav.competitions"), admin_competitions_path],
+                [t("nav.events"), admin_events_path],
+                [t("nav.karts"), admin_kart_types_path],
+                [t("nav.pricing"), admin_session_prices_path],
+                [t("nav.memberships"), admin_membership_plans_path],
+                ["Tracks", admin_tracks_path],
+                [t("nav.gallery"), admin_gallery_items_path],
+                [t("drivers.title"), admin_drivers_path],
+                [t("account.my_bookings"), admin_bookings_path],
+                [t("admin.registrations"), admin_registrations_path]].each do |label, path| %>
+              <%= link_to label, path, class: "block rounded-xl px-3 py-2 text-sm transition #{nav_active?(path) ? 'bg-white/5 text-white' : 'text-[color:var(--color-muted)] hover:bg-white/5'}" %>
+            <% end %>
+          </nav>
+          <div class="mt-6 border-t border-[color:var(--color-line)] pt-4">
+            <%= link_to "← #{t('nav.home')}", root_path, class: "block px-3 py-2 text-sm text-[color:var(--color-muted)]" %>
+          </div>
+        </div>
+      </aside>
+
+      <div class="min-w-0 flex-1">
+        <header class="sticky top-0 z-40 flex items-center justify-between border-b border-[color:var(--color-line)] bg-[color:var(--color-base)]/80 px-5 py-3 backdrop-blur">
+          <span class="font-display font-bold lg:hidden"><%= t("admin.dashboard") %></span>
+          <span class="hidden text-sm text-[color:var(--color-muted)] lg:block"><%= content_for(:title) %></span>
+          <span class="text-sm text-[color:var(--color-muted)]"><%= current_user.email %></span>
+        </header>
+        <%= render "shared/flash" %>
+        <main class="p-5 md:p-8"><%= yield %></main>
+      </div>
+    </div>
+  </body>
+</html>

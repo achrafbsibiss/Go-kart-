@@ -1,0 +1,37 @@
+<% content_for :title, "#{t('races.live')} — #{current_venue.name}" %>
+<section class="mx-auto max-w-7xl px-5 py-10">
+  <h1 class="flex items-center gap-3 font-display text-4xl font-black"><span class="live-dot"></span><%= t("races.live") %></h1>
+
+  <% if @live.any? %>
+    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% @live.each { |race| %><%= render "races/live_card", race: race %><% } %>
+    </div>
+  <% else %>
+    <div class="card mt-8 grid place-items-center p-14 text-center text-[color:var(--color-muted)]">
+      <%= icon(:flag, css: "h-12 w-12 opacity-40") %>
+      <p class="mt-4"><%= t("races.no_live") %></p>
+    </div>
+  <% end %>
+
+  <% if @scheduled.any? %>
+    <h2 class="mt-14 font-display text-2xl font-bold"><%= t("races.upcoming") %></h2>
+    <div class="mt-5 grid gap-3 md:grid-cols-2">
+      <% @scheduled.each do |race| %>
+        <%= link_to race_path(race), class: "card flex items-center justify-between p-5 hover:border-white/20" do %>
+          <div>
+            <h3 class="font-display font-bold"><%= race.name.presence || "Race ##{race.id}" %></h3>
+            <p class="text-sm text-[color:var(--color-muted)]"><%= l(race.scheduled_at, format: :long) if race.scheduled_at %></p>
+          </div>
+          <span class="chip"><%= t("races.status.#{race.status}") %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @finished.any? %>
+    <h2 class="mt-14 font-display text-2xl font-bold"><%= t("races.finished") %></h2>
+    <div class="mt-5 grid gap-3 md:grid-cols-3">
+      <% @finished.each { |race| %><%= render "races/live_card", race: race %><% } %>
+    </div>
+  <% end %>
+</section>

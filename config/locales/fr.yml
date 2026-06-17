@@ -1,0 +1,182 @@
+fr:
+  locales:
+    fr: Français
+    en: English
+    ar: العربية
+  meta:
+    tagline: "Karting Premium & Chronométrage en Direct"
+    description: "Pilotez des karts premium, suivez le chronométrage et les records en direct, réservez vos sessions et participez aux compétitions sur notre circuit d'exception."
+  nav:
+    home: Accueil
+    karts: Karts
+    pricing: Tarifs
+    memberships: Abonnements
+    competitions: Compétitions
+    events: Événements
+    live: Direct
+    records: Records
+    gallery: Galerie
+    contact: Contact
+    ranking: Classement
+    profile: Profil
+    admin: Admin
+    sign_in: Connexion
+    book: Réserver
+  footer:
+    explore: Explorer
+    visit: Nous rendre visite
+    address_tbd: "Adresse à venir"
+    rights: Tous droits réservés.
+  home:
+    hero_eyebrow: "Adrénaline. Précision. Vitesse."
+    hero_title_1: "VIVEZ"
+    hero_title_2: "L'APEX"
+    hero_sub: "Karts électriques et thermiques de dernière génération. Chronométrage en temps réel. Compétition de haut niveau."
+    book_now: Réservez votre session
+    watch_live: Voir en direct
+    live_now: En direct
+    no_live: "Aucune course en direct pour le moment"
+    upcoming_events: Événements à venir
+    featured_karts: Karts en vedette
+    view_all: Tout voir
+    stat_top_speed: Vitesse max
+    stat_track: Longueur piste
+    stat_corners: Virages
+    open_now: Ouvert
+    closed_now: Fermé
+  karts:
+    title: Nos karts
+    subtitle: "Une flotte pensée pour chaque pilote — du débutant au chasseur de podium."
+    top_speed: Vitesse max
+    power: Puissance
+    weight: Poids
+    min_age: Âge min
+    engine: Moteur
+    book_this: Réserver ce kart
+    specs: Caractéristiques
+  pricing:
+    title: Sessions & tarifs
+    subtitle: "Des tarifs transparents. Choisissez votre format et foncez."
+    book: Réserver
+    minutes: min
+    laps: tours
+  memberships:
+    title: Formules d'abonnement
+    subtitle: "Pilotez plus, payez moins. Avantages membres, réservation prioritaire et événements exclusifs."
+    popular: Le plus populaire
+    choose: Choisir
+    period:
+      monthly: "/mois"
+      quarterly: "/trimestre"
+      yearly: "/an"
+  competitions:
+    title: Compétitions
+    subtitle: "Sprints, courses d'endurance et championnats complets."
+    upcoming: À venir
+    register: S'inscrire
+    standings: Classement
+    bracket: Tableau
+    spots_left: "%{count} places restantes"
+    entry_fee: Frais d'inscription
+    free: Gratuit
+    format:
+      sprint: Sprint
+      endurance: Endurance
+      championship: Championnat
+      knockout: Élimination
+  events:
+    title: Événements
+    subtitle: "Anniversaires, journées entreprise et soirées spéciales sur la piste."
+  gallery:
+    title: Galerie
+    subtitle: "La piste, les karts, les moments."
+  contact:
+    title: Contact & accès
+    subtitle: "Venez piloter avec nous."
+    name: Votre nom
+    email: Email
+    message: Message
+    send: Envoyer
+    hours: Horaires d'ouverture
+    find_us: Nous trouver
+    closed: Fermé
+    sent: "Merci ! Nous vous répondrons rapidement."
+  races:
+    live: Courses en direct
+    upcoming: Programmées
+    finished: Terminées
+    no_live: "Aucune course en direct actuellement. Consultez le programme ci-dessous."
+    leaderboard: Classement
+    pos: Pos
+    driver: Pilote
+    laps: Tours
+    best: Meilleur
+    last: Dernier
+    gap: Écart
+    fastest_lap: Meilleur tour
+    status:
+      scheduled: Programmée
+      live: En direct
+      finished: Terminée
+      canceled: Annulée
+    watch: Suivre en direct
+  records:
+    title: Records au tour
+    subtitle: "Les tours les plus rapides sur notre circuit."
+    day: Aujourd'hui
+    week: Cette semaine
+    month: Ce mois-ci
+    all: Tous les temps
+    no_data: "Aucun record — soyez le premier."
+  drivers:
+    title: Pilotes
+    subtitle: "Classements, statistiques et historique des courses."
+    races: Courses
+    best_lap: Meilleur tour
+    points: Points
+    history: Historique
+    achievements: Trophées
+  account:
+    dashboard: Tableau de bord
+    welcome: "Bon retour, %{name}"
+    my_bookings: Mes réservations
+    my_registrations: Mes inscriptions
+    my_subscriptions: Abonnement
+    profile: Profil
+    new_booking: Nouvelle réservation
+    upcoming: À venir
+    none: "Rien pour le moment."
+  booking:
+    title: Réserver une session
+    select_session: Choisir une session
+    select_kart: Type de kart
+    any_kart: N'importe quel kart
+    date_time: Date & heure
+    party_size: Pilotes
+    notes: Notes
+    pay: Payer & confirmer
+    confirmed: "Réservation confirmée ! Référence %{ref}"
+    summary: Récapitulatif
+    total: Total
+  admin:
+    dashboard: Tableau admin
+    races: Courses
+    new_race: Nouvelle course
+    start: Démarrer
+    finish: Terminer
+    manage: Gérer
+    entries: Engagés
+    overview: Vue d'ensemble
+    today_bookings: Réservations du jour
+    live_races: Courses en direct
+    registrations: Inscriptions
+  errors:
+    not_authorized: "Vous n'êtes pas autorisé à effectuer cette action."
+  actions:
+    save: Enregistrer
+    cancel: Annuler
+    delete: Supprimer
+    edit: Modifier
+    create: Créer
+    back: Retour
+    view: Voir

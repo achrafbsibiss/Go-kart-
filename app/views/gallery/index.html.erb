@@ -1,0 +1,29 @@
+<% content_for :title, "#{t('gallery.title')} — #{current_venue.name}" %>
+<%= render "shared/page_header", title: t("gallery.title"), subtitle: t("gallery.subtitle") %>
+<section class="mx-auto max-w-7xl px-5 py-10">
+  <div class="mb-6 flex flex-wrap gap-2">
+    <%= link_to t("home.view_all"), gallery_index_path, class: "chip #{'border-[color:var(--color-accent)]' unless @category}" %>
+    <% @categories.each do |cat| %>
+      <%= link_to cat.titleize, gallery_index_path(category: cat), class: "chip #{'border-[color:var(--color-accent)]' if @category == cat}" %>
+    <% end %>
+  </div>
+
+  <% if @items.any? %>
+    <div class="columns-2 gap-4 md:columns-3 lg:columns-4 [&>*]:mb-4">
+      <% @items.each do |item| %>
+        <div class="card overflow-hidden break-inside-avoid">
+          <% if item.video? && item.video_url.present? %>
+            <div class="relative aspect-video bg-black"><span class="absolute inset-0 grid place-items-center text-white"><%= icon(:bolt, css: "h-10 w-10") %></span></div>
+          <% elsif item.image.attached? %>
+            <%= image_tag item.image, class: "w-full object-cover", loading: "lazy" %>
+          <% else %>
+            <div class="grid aspect-square place-items-center text-[color:var(--color-faint)]"><%= icon(:image, css: "h-10 w-10") %></div>
+          <% end %>
+          <% if item.title.present? %><div class="p-3 text-sm"><%= item.title %></div><% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-[color:var(--color-muted)]"><%= t("account.none") %></p>
+  <% end %>
+</section>

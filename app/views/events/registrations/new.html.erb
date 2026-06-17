@@ -1,0 +1,10 @@
+<% content_for :title, "#{t('competitions.register')} — #{@event.name}" %>
+<section class="mx-auto max-w-lg px-5 py-12">
+  <h1 class="font-display text-3xl font-black"><%= t("competitions.register") %></h1>
+  <p class="mt-2 text-[color:var(--color-muted)]"><%= @event.name %></p>
+  <div class="card mt-6 p-6">
+    <%= form_with url: event_registrations_path(@event), method: :post do |f| %>
+      <%= f.submit t("competitions.register"), class: "btn btn-primary w-full cursor-pointer" %>
+    <% end %>
+  </div>
+</section>

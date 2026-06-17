@@ -1,0 +1,9 @@
+<div class="glass animate-rise flex items-start gap-3 px-4 py-3 text-sm" data-controller="toast" data-toast-delay-value="6000">
+  <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-white/5 text-[color:var(--color-accent)]">
+    <%= icon(:flag, css: "h-4 w-4") %>
+  </span>
+  <div class="min-w-0">
+    <p class="font-semibold"><%= notification.title %></p>
+    <% if notification.body.present? %><p class="truncate text-[color:var(--color-muted)]"><%= notification.body %></p><% end %>
+  </div>
+</div>

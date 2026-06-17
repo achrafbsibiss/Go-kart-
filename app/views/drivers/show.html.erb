@@ -1,0 +1,34 @@
+<% content_for :title, "#{@driver.display_name} — #{current_venue.name}" %>
+<section class="mx-auto max-w-4xl px-5 py-10">
+  <div class="glass flex flex-col items-center gap-5 p-8 text-center sm:flex-row sm:text-start">
+    <span class="grid h-24 w-24 place-items-center overflow-hidden rounded-3xl bg-white/5">
+      <% if @driver.avatar.attached? %><%= image_tag @driver.avatar, class: "h-full w-full object-cover" %><% else %><%= icon(:user, css: "h-10 w-10 text-[color:var(--color-faint)]") %><% end %>
+    </span>
+    <div class="flex-1">
+      <h1 class="font-display text-3xl font-black"><%= @driver.display_name %></h1>
+      <p class="text-[color:var(--color-muted)]"><%= @driver.country %></p>
+    </div>
+    <div class="grid grid-cols-3 gap-6">
+      <% [[@driver.total_races || 0, t("drivers.races")], [@driver.best_lap_label, t("drivers.best_lap")], [@driver.points || 0, t("drivers.points")]].each do |v, l| %>
+        <div class="text-center"><div class="font-display text-xl font-bold gradient-text"><%= v %></div><div class="text-xs text-[color:var(--color-faint)]"><%= l %></div></div>
+      <% end %>
+    </div>
+  </div>
+
+  <h2 class="mt-10 font-display text-xl font-bold"><%= t("drivers.history") %></h2>
+  <div class="card mt-4 overflow-hidden">
+    <% @entries.each do |entry| %>
+      <div class="flex items-center justify-between border-b border-[color:var(--color-line)]/50 px-4 py-3 text-sm">
+        <div class="min-w-0">
+          <div class="truncate font-medium"><%= entry.race&.name.presence || "Race ##{entry.race_id}" %></div>
+          <div class="text-xs text-[color:var(--color-faint)]"><%= entry.race&.track&.name %></div>
+        </div>
+        <div class="flex items-center gap-4">
+          <% if entry.finish_position %><span class="chip">P<%= entry.finish_position %></span><% end %>
+          <span class="font-mono text-[color:var(--color-electric)]"><%= entry.best_lap_label %></span>
+        </div>
+      </div>
+    <% end %>
+    <% if @entries.empty? %><p class="px-4 py-12 text-center text-[color:var(--color-faint)]"><%= t("account.none") %></p><% end %>
+  </div>
+</section>

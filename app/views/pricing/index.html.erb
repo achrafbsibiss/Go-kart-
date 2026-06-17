@@ -1,0 +1,21 @@
+<% content_for :title, "#{t('pricing.title')} — #{current_venue.name}" %>
+<%= render "shared/page_header", title: t("pricing.title"), subtitle: t("pricing.subtitle") %>
+<section class="mx-auto max-w-6xl px-5 py-10">
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <% @sessions.each do |s| %>
+      <div class="card flex flex-col p-6">
+        <div class="flex items-center justify-between">
+          <span class="chip"><%= t("session_prices.category.#{s.category}", default: s.category.to_s.titleize) %></span>
+          <% if s.kart_type %><span class="text-xs text-[color:var(--color-faint)]"><%= s.kart_type.name %></span><% end %>
+        </div>
+        <h3 class="mt-4 font-display text-xl font-bold"><%= s.name %></h3>
+        <p class="mt-2 flex-1 text-sm text-[color:var(--color-muted)]"><%= s.description %></p>
+        <div class="mt-4 flex items-baseline gap-2">
+          <span class="font-display text-3xl font-black gradient-text"><%= s.price.format %></span>
+          <span class="text-sm text-[color:var(--color-faint)]"><%= s.duration_minutes %> <%= t("pricing.minutes") %><%= " · #{s.laps} #{t('pricing.laps')}" if s.laps %></span>
+        </div>
+        <%= link_to t("pricing.book"), new_account_booking_path(session_price_id: s.id), class: "btn btn-primary mt-5" %>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+<% content_for :title, t("booking.title") %>
+<h1 class="font-display text-3xl font-black"><%= t("booking.title") %></h1>
+
+<%= form_with model: [:account, @booking], class: "mt-6 grid gap-6 lg:grid-cols-[1fr_20rem]", data: { controller: "booking" } do |f| %>
+  <div class="space-y-5">
+    <% if @booking.errors.any? %>
+      <div class="card border-[color:var(--color-accent)] p-4 text-sm text-[color:var(--color-accent-soft)]">
+        <%= @booking.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div class="card p-5">
+      <label class="text-sm font-semibold"><%= t("booking.select_session") %></label>
+      <div class="mt-3 grid gap-2 sm:grid-cols-2">
+        <% @sessions.each do |s| %>
+          <label class="card flex cursor-pointer items-center justify-between p-4 transition has-[:checked]:border-[color:var(--color-accent)] has-[:checked]:bg-white/[0.04]">
+            <span>
+              <span class="block font-medium"><%= s.name %></span>
+              <span class="text-xs text-[color:var(--color-faint)]"><%= s.duration_minutes %> <%= t("pricing.minutes") %></span>
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="font-display gradient-text"><%= s.price.format %></span>
+              <%= f.radio_button :session_price_id, s.id, class: "accent-[color:var(--color-accent)]", checked: @booking.session_price_id == s.id, data: { booking_target: "session", price: s.price_cents, action: "change->booking#recalc" } %>
+            </span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <label class="text-sm font-semibold"><%= t("booking.select_kart") %></label>
+      <%= f.select :kart_type_id, @karts.map { |k| [k.name, k.id] }, { include_blank: t("booking.any_kart") }, class: "mt-3 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="card p-5">
+        <label class="text-sm font-semibold"><%= t("booking.date_time") %></label>
+        <%= f.datetime_local_field :starts_at, class: "mt-3 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+      </div>
+      <div class="card p-5">
+        <label class="text-sm font-semibold"><%= t("booking.party_size") %></label>
+        <%= f.number_field :party_size, min: 1, max: 20, class: "mt-3 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3", data: { booking_target: "party", action: "input->booking#recalc" } %>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <label class="text-sm font-semibold"><%= t("booking.notes") %></label>
+      <%= f.text_area :notes, rows: 2, class: "mt-3 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-surface-2)] px-4 py-3" %>
+    </div>
+  </div>
+
+  <%# Sticky summary / CTA %>
+  <aside class="lg:sticky lg:top-24 lg:self-start">
+    <div class="card p-6">
+      <h2 class="font-display text-lg font-bold"><%= t("booking.summary") %></h2>
+      <div class="mt-4 flex items-center justify-between border-t border-[color:var(--color-line)] pt-4">
+        <span class="text-[color:var(--color-muted)]"><%= t("booking.total") %></span>
+        <span class="font-display text-2xl gradient-text" data-booking-target="total">—</span>
+      </div>
+      <%= f.submit t("booking.pay"), class: "btn btn-primary mt-5 w-full cursor-pointer" %>
+    </div>
+  </aside>
+<% end %>
