@@ -1,8 +1,20 @@
 # encoding : utf-8
 
 MoneyRails.configure do |config|
-  # To set the default currency
-  config.default_currency = ENV.fetch("DEFAULT_CURRENCY", "EUR").downcase.to_sym
+  # Register Moroccan Dirham under the local "DHS" code (ISO is MAD, but the
+  # venue uses "DH"/"Dhs" colloquially).
+  unless Money::Currency.find("DHS")
+    config.register_currency = {
+      priority: 1, iso_code: "DHS", name: "Moroccan Dirham", symbol: "DH",
+      symbol_first: false, subunit: "Centime", subunit_to_unit: 100,
+      thousands_separator: " ", decimal_mark: ","
+    }
+  end
+
+  # Default currency from ENV, falling back to DHS if the code is unknown
+  # (never crash boot on a bad DEFAULT_CURRENCY value).
+  requested = ENV.fetch("DEFAULT_CURRENCY", "DHS").upcase
+  config.default_currency = (Money::Currency.find(requested) ? requested : "DHS").downcase.to_sym
 
   # Format money per the active I18n locale (fr/en/ar).
   config.locale_backend = :i18n

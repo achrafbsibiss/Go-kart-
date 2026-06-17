@@ -40,6 +40,11 @@
 @layer base {
   :root { color-scheme: dark; }
 
+  /* Kill horizontal scroll from bleeding/skewed hero elements.
+     `clip` (not `hidden`) doesn't create a scroll container, so the sticky
+     navbar keeps sticking. */
+  html { overflow-x: clip; }
+
   body {
     background: var(--color-night);
     color: var(--color-ink);
@@ -47,6 +52,8 @@
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
     position: relative;
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   /* Asphalt grain — the single most important texture. Kills the flat

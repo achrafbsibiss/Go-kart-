@@ -1,9 +1,9 @@
 <header class="sticky top-0 z-50 bg-[color:var(--color-night)]/95 backdrop-blur-[2px]">
-  <nav class="flex items-stretch justify-between gap-4 border-b border-[color:var(--color-line)] pe-3">
+  <nav class="flex items-stretch justify-between gap-2 border-b border-[color:var(--color-line)] pe-2 sm:pe-3">
     <%# Logo jammed hard to the left edge, square block %>
-    <%= link_to root_path, class: "group flex items-center gap-3 border-e border-[color:var(--color-line)] pe-5 ps-4" do %>
-      <span class="grid h-8 w-8 place-items-center bg-[color:var(--color-accent)]"><%= icon(:flag, css: "h-5 w-5 text-[color:var(--color-ink)]") %></span>
-      <span class="font-display text-xl tracking-tight"><%= current_venue.name.upcase %></span>
+    <%= link_to root_path, class: "group flex min-w-0 items-center gap-2 border-e border-[color:var(--color-line)] pe-3 ps-3 sm:gap-3 sm:pe-5 sm:ps-4" do %>
+      <span class="grid h-8 w-8 shrink-0 place-items-center bg-[color:var(--color-accent)]"><%= icon(:flag, css: "h-5 w-5 text-[color:var(--color-ink)]") %></span>
+      <span class="font-display truncate text-base tracking-tight sm:text-xl"><%= current_venue.name.upcase %></span>
     <% end %>
 
     <div class="hidden items-center lg:flex">
@@ -12,7 +12,7 @@
       <% end %>
     </div>
 
-    <div class="flex items-center gap-3 py-2">
+    <div class="flex shrink-0 items-center gap-2 py-2 sm:gap-3">
       <%= link_to live_path, class: "font-mono2 hidden items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[color:var(--color-electric)] sm:flex" do %>
         <span class="live-dot"></span> <%= t("nav.live") %>
       <% end %>
