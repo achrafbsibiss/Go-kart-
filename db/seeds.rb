@@ -131,4 +131,23 @@ sp = SessionPrice.first
 Booking.create!(user: customer, session_price: sp, kart_type: sp.kart_type, starts_at: 2.days.from_now.change(hour: 19), party_size: 2, status: :confirmed)
 champ.registrations.create!(user: customer, driver: customer.driver, status: :confirmed)
 
+# --- Attach real karting photos via ActiveStorage ---
+def attach_image(attachable, relative)
+  path = Rails.root.join("app/assets/images", relative)
+  return unless File.exist?(path)
+
+  attachable.attach(io: File.open(path), filename: File.basename(relative), content_type: "image/jpeg")
+end
+
+kart_files = %w[karts/rookie.jpg karts/sport.jpg karts/twin.jpg karts/electric.jpg karts/pro.jpg]
+kart_records.each_with_index { |k, i| attach_image(k.photo, kart_files[i]) }
+GalleryItem.ordered.each_with_index { |g, i| attach_image(g.image, "gallery/g#{(i % 6) + 1}.jpg") }
+attach_image(track.layout_image, "track.jpg")
+attach_image(champ.banner, "banners/champ.jpg")
+attach_image(sprint.banner, "banners/sprint.jpg")
+Event.find_by(name: "Friday Night Lights")&.then { |e| attach_image(e.banner, "banners/friday.jpg") }
+Event.find_by(name: "Corporate Grand Prix")&.then { |e| attach_image(e.banner, "banners/corporate.jpg") }
+attach_image(venue.hero_image, "hero.jpg")
+%w[gallery/g1.jpg gallery/g4.jpg track.jpg].each { |f| attach_image(venue.photos, f) }
+
 puts "Done. Admin: admin@apexkarting.example / password — Customer: driver@apexkarting.example / password"

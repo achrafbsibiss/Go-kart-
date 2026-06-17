@@ -5,24 +5,24 @@
    Dark theme, vibrant accents, glassmorphism, mobile-first.
    =========================================================================== */
 @theme {
-  /* Surfaces */
-  --color-base: #06070a;
-  --color-surface: #0d0f15;
-  --color-surface-2: #141822;
-  --color-elevated: #1b2130;
-  --color-line: #232a39;
+  /* Surfaces — Monaco Blue (midnight navy) */
+  --color-night: #060a14;
+  --color-surface: #0d1424;
+  --color-surface-2: #131c30;
+  --color-elevated: #1a2440;
+  --color-line: #1f2c45;
 
-  /* Accents — racing red + electric cyan */
-  --color-accent: #ff2d2d;
-  --color-accent-soft: #ff5a5a;
-  --color-electric: #15f0c8;
-  --color-amber: #ffb020;
-  --color-purple: #7c3aed;
+  /* Accents — azure + teal (purple kept for fastest-lap convention) */
+  --color-accent: #3da5ff;
+  --color-accent-soft: #6cc0ff;
+  --color-electric: #22e0c8;
+  --color-amber: #ffc861;
+  --color-purple: #a855f7;
 
   /* Text */
-  --color-ink: #f4f6fb;
-  --color-muted: #9aa3b5;
-  --color-faint: #5b6477;
+  --color-ink: #eef3fb;
+  --color-muted: #93a4c0;
+  --color-faint: #5a6b88;
 
   /* Type */
   --font-display: "Orbitron", "Rajdhani", ui-sans-serif, system-ui, sans-serif;
@@ -38,9 +38,9 @@
 
   body {
     background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(124, 58, 237, 0.12), transparent 60%),
-      radial-gradient(900px 500px at -10% 10%, rgba(21, 240, 200, 0.08), transparent 55%),
-      var(--color-base);
+      radial-gradient(1200px 600px at 80% -10%, rgba(61, 165, 255, 0.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(34, 224, 200, 0.08), transparent 55%),
+      var(--color-night);
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -116,9 +116,9 @@
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255,45,45,0.6); }
-  70% { box-shadow: 0 0 0 12px rgba(255,45,45,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,45,45,0); }
+  0% { box-shadow: 0 0 0 0 rgba(61,165,255,0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(61,165,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(61,165,255,0); }
 }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }

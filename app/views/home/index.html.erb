@@ -1,7 +1,9 @@
 <%# ===== HERO ===== %>
 <section class="relative overflow-hidden">
   <div class="absolute inset-0 -z-10">
-    <div class="absolute inset-0" style="background:radial-gradient(900px 500px at 70% 0%, rgba(255,45,45,0.18), transparent 60%)"></div>
+    <%= image_tag "hero.jpg", alt: "", class: "absolute inset-0 h-full w-full object-cover opacity-50", loading: "eager" %>
+    <div class="absolute inset-0" style="background:linear-gradient(to bottom, transparent, var(--color-night) 92%)"></div>
+    <div class="absolute inset-0" style="background:radial-gradient(900px 500px at 70% 0%, rgba(61,165,255,0.18), transparent 60%)"></div>
     <div class="absolute inset-0 opacity-[0.04]" style="background-image:linear-gradient(var(--color-ink) 1px,transparent 1px),linear-gradient(90deg,var(--color-ink) 1px,transparent 1px);background-size:48px 48px"></div>
   </div>
 
