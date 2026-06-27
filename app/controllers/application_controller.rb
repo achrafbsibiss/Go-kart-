@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
-  include Pundit::Authorization
+  include ActionPolicy::Controller
+
+  # Action Policy needs to know the current user (the "authorization context").
+  authorize :user, through: :current_user
 
   allow_browser versions: :modern
 
@@ -7,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_venue, :rtl?
 
-  rescue_from Pundit::NotAuthorizedError, with: :forbidden
+  rescue_from ActionPolicy::Unauthorized, with: :forbidden
 
   def default_url_options
     { locale: I18n.locale == I18n.default_locale ? nil : I18n.locale }
