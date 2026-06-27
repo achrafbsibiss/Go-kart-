@@ -28,7 +28,7 @@ gem "sidekiq", "~> 7.3"
 gem "connection_pool", "~> 2.4"
 
 # Authentication + authorization
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "action_policy", "~> 0.7"
 
 # Money / pricing
