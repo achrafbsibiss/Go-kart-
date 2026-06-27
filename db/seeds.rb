@@ -68,8 +68,30 @@ drivers = driver_names.each_with_index.map do |nick, i|
                  best_lap_ms: rand(41_000..48_000), points: rand(0..250))
 end
 
-# --- Gallery ---
-6.times { |i| GalleryItem.create!(title: "Track shot #{i + 1}", category: GalleryItem.categories.keys.sample, media_kind: :photo, position: i, featured: i < 2) }
+# --- Gallery (real photos, sensible categories) ---
+GALLERY_PHOTOS = [
+  [ "gallery/g1.jpg", :track,        "Grid lights out" ],
+  [ "gallery/g2.jpg", :karts,        "CRG on the limit" ],
+  [ "gallery/g3.jpg", :karts,        "Sunday qualifying" ],
+  [ "gallery/g4.jpg", :facility,     "Indoor circuit" ],
+  [ "gallery/g5.jpg", :karts,        "Cockpit view" ],
+  [ "gallery/g6.jpg", :competitions, "Number plates" ],
+  [ "karts/rookie.jpg",   :karts,    "Rookie fleet" ],
+  [ "karts/sport.jpg",    :karts,    "Sport 270 battle" ],
+  [ "karts/twin.jpg",     :karts,    "Wheel to wheel" ],
+  [ "karts/electric.jpg", :karts,    "Volt EV by night" ],
+  [ "karts/pro.jpg",      :karts,    "Pro RX shifter" ],
+  [ "banners/champ.jpg",     :competitions, "Championship round" ],
+  [ "banners/sprint.jpg",    :competitions, "Sprint cup" ],
+  [ "banners/friday.jpg",    :events,       "Friday night lights" ],
+  [ "banners/corporate.jpg", :events,       "Corporate grand prix" ],
+  [ "track.jpg",  :track,    "Aerial circuit" ],
+  [ "hero.jpg",   :facility, "The paddock" ]
+].freeze
+
+GALLERY_PHOTOS.each_with_index do |(_file, category, title), i|
+  GalleryItem.create!(title: title, category: category, media_kind: :photo, position: i, featured: i < 3)
+end
 
 # --- Events ---
 [
@@ -141,7 +163,7 @@ end
 
 kart_files = %w[karts/rookie.jpg karts/sport.jpg karts/twin.jpg karts/electric.jpg karts/pro.jpg]
 kart_records.each_with_index { |k, i| attach_image(k.photo, kart_files[i]) }
-GalleryItem.ordered.each_with_index { |g, i| attach_image(g.image, "gallery/g#{(i % 6) + 1}.jpg") }
+GalleryItem.ordered.each_with_index { |g, i| attach_image(g.image, GALLERY_PHOTOS[i][0]) }
 attach_image(track.layout_image, "track.jpg")
 attach_image(champ.banner, "banners/champ.jpg")
 attach_image(sprint.banner, "banners/sprint.jpg")
