@@ -25,7 +25,7 @@ gem "redis", ">= 4.0.1"
 # Background jobs for timing feed, notifications, payment webhooks
 gem "sidekiq", "~> 7.3"
 # Pin: connection_pool 3.x requires Ruby 3.4+, this env is Ruby 3.3
-gem "connection_pool", "~> 2.4"
+gem "connection_pool", "~> 3.0"
 
 # Authentication + authorization
 gem "devise", "~> 4.9"
