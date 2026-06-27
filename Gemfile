@@ -32,7 +32,7 @@ gem "devise", "~> 4.9"
 gem "action_policy", "~> 0.7"
 
 # Money / pricing
-gem "money-rails", "~> 1.15"
+gem "money-rails", "~> 3.0"
 
 # Pretty slugs for karts, competitions, drivers
 gem "friendly_id", "~> 5.5"
