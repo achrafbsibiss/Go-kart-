@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :set_locale
+  before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_venue, :rtl?
 
   rescue_from Pundit::NotAuthorizedError, with: :forbidden
@@ -49,5 +50,12 @@ class ApplicationController < ActionController::Base
 
   def require_admin!
     redirect_to root_path, alert: "Admins only." unless current_user&.staff_or_admin?
+  end
+
+  # Allow profile fields through Devise sign-up / account-update.
+  def configure_permitted_parameters
+    extra = %i[first_name last_name phone locale marketing_opt_in]
+    devise_parameter_sanitizer.permit(:sign_up, keys: extra)
+    devise_parameter_sanitizer.permit(:account_update, keys: extra)
   end
 end
