@@ -29,7 +29,7 @@ gem "connection_pool", "~> 2.4"
 
 # Authentication + authorization
 gem "devise", "~> 4.9"
-gem "pundit", "~> 2.4"
+gem "action_policy", "~> 0.7"
 
 # Money / pricing
 gem "money-rails", "~> 1.15"
